@@ -1,2 +1,2 @@
-# literate-barnacle
-This is an application manage background service to run a local web application such as webserver, code, database, memcached, auto create virtual hosts etc...
+# Py LWSS
+A Python application for managing background services to run a local development environment, including a web server, database, Memcached, automatic virtual host creation, and more.
