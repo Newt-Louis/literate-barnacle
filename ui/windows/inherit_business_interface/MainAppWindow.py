@@ -1,12 +1,8 @@
-# ui/windows/main_app_window.py
-
 from PySide6.QtWidgets import QMainWindow
-# Import class giao diện đã được tạo tự động
 from ui.windows.origin_interface import Ui_MainWindow
+from ui.windows.inherit_business_interface import DatabasesPageController
 
-
-
-class MainWindow(QMainWindow):
+class MainAppWindow(QMainWindow):
     def __init__(self):
         # Gọi hàm khởi tạo của lớp cha (QMainWindow)
         super().__init__()
@@ -25,6 +21,18 @@ class MainWindow(QMainWindow):
         # Thiết lập trang mặc định khi mở ứng dụng
         self.ui.dashboard_button.setChecked(True)  # Đánh dấu nút Dashboard là đang được chọn
         self.ui.main_content_area.setCurrentWidget(self.ui.dashboard_page)
+
+        # Khởi tạo các controller
+        self.database_page = DatabasesPageController(self.core_model)
+        # self.languages_page = LanguagesPageController(self.core_model)
+
+        # Thêm chúng vào stacked widget
+        self.ui.main_content_area.addWidget(self.database_page)
+        # self.ui.main_content_area.addWidget(self.languages_page)
+
+        # Kết nối các nút sidebar
+        self.ui.databases_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.database_page))
+        # ...
 
     def _connect_signals(self):
         """

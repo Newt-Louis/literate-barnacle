@@ -1,2 +1,2 @@
 from Pages import DatabasesPageController
-from main_app_window import MainWindow
+from MainAppWindow import MainAppWindow
