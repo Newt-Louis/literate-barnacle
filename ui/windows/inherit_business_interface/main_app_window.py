@@ -2,7 +2,8 @@
 
 from PySide6.QtWidgets import QMainWindow
 # Import class giao diện đã được tạo tự động
-from ui.windows.origin_interface.main_window import Ui_MainWindow
+from ui.windows.origin_interface import Ui_MainWindow
+
 
 
 class MainWindow(QMainWindow):
