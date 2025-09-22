@@ -20,16 +20,16 @@ from PySide6.QtWidgets import (QAbstractButton, QApplication, QComboBox, QDialog
     QRadioButton, QSizePolicy, QSpacerItem, QVBoxLayout,
     QWidget)
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        if not Form.objectName():
-            Form.setObjectName(u"Form")
-        Form.resize(480, 640)
-        self.verticalLayout = QVBoxLayout(Form)
+class Ui_DatabasesPage(object):
+    def setupUi(self, DatabasesPage):
+        if not DatabasesPage.objectName():
+            DatabasesPage.setObjectName(u"DatabasesPage")
+        DatabasesPage.resize(480, 640)
+        self.verticalLayout = QVBoxLayout(DatabasesPage)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.database_title_layout = QHBoxLayout()
         self.database_title_layout.setObjectName(u"database_title_layout")
-        self.database_title_label = QLabel(Form)
+        self.database_title_label = QLabel(DatabasesPage)
         self.database_title_label.setObjectName(u"database_title_label")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -44,7 +44,7 @@ class Ui_Form(object):
 
         self.database_save_change_layout = QHBoxLayout()
         self.database_save_change_layout.setObjectName(u"database_save_change_layout")
-        self.database_save_change_buttonbox = QDialogButtonBox(Form)
+        self.database_save_change_buttonbox = QDialogButtonBox(DatabasesPage)
         self.database_save_change_buttonbox.setObjectName(u"database_save_change_buttonbox")
         self.database_save_change_buttonbox.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Ok)
 
@@ -59,32 +59,32 @@ class Ui_Form(object):
 
         self.database_content_layout = QGridLayout()
         self.database_content_layout.setObjectName(u"database_content_layout")
-        self.mysql_radio = QRadioButton(Form)
+        self.mysql_radio = QRadioButton(DatabasesPage)
         self.mysql_radio.setObjectName(u"mysql_radio")
 
         self.database_content_layout.addWidget(self.mysql_radio, 0, 0, 1, 1)
 
-        self.mysql_combobox = QComboBox(Form)
+        self.mysql_combobox = QComboBox(DatabasesPage)
         self.mysql_combobox.setObjectName(u"mysql_combobox")
 
         self.database_content_layout.addWidget(self.mysql_combobox, 0, 1, 1, 1)
 
-        self.sqlserver_radio = QRadioButton(Form)
+        self.sqlserver_radio = QRadioButton(DatabasesPage)
         self.sqlserver_radio.setObjectName(u"sqlserver_radio")
 
         self.database_content_layout.addWidget(self.sqlserver_radio, 1, 0, 1, 1)
 
-        self.sqlserver_combobox = QComboBox(Form)
+        self.sqlserver_combobox = QComboBox(DatabasesPage)
         self.sqlserver_combobox.setObjectName(u"sqlserver_combobox")
 
         self.database_content_layout.addWidget(self.sqlserver_combobox, 1, 1, 1, 1)
 
-        self.sqlite_radio = QRadioButton(Form)
+        self.sqlite_radio = QRadioButton(DatabasesPage)
         self.sqlite_radio.setObjectName(u"sqlite_radio")
 
         self.database_content_layout.addWidget(self.sqlite_radio, 2, 0, 1, 1)
 
-        self.sqlite_combobox = QComboBox(Form)
+        self.sqlite_combobox = QComboBox(DatabasesPage)
         self.sqlite_combobox.setObjectName(u"sqlite_combobox")
 
         self.database_content_layout.addWidget(self.sqlite_combobox, 2, 1, 1, 1)
@@ -98,7 +98,7 @@ class Ui_Form(object):
 
         self.database_add_new_layout = QHBoxLayout()
         self.database_add_new_layout.setObjectName(u"database_add_new_layout")
-        self.database_add_new_button = QPushButton(Form)
+        self.database_add_new_button = QPushButton(DatabasesPage)
         self.database_add_new_button.setObjectName(u"database_add_new_button")
 
         self.database_add_new_layout.addWidget(self.database_add_new_button)
@@ -107,17 +107,17 @@ class Ui_Form(object):
         self.verticalLayout.addLayout(self.database_add_new_layout)
 
 
-        self.retranslateUi(Form)
+        self.retranslateUi(DatabasesPage)
 
-        QMetaObject.connectSlotsByName(Form)
+        QMetaObject.connectSlotsByName(DatabasesPage)
     # setupUi
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.database_title_label.setText(QCoreApplication.translate("Form", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700;\">Databases</span></p></body></html>", None))
-        self.mysql_radio.setText(QCoreApplication.translate("Form", u"MySQL", None))
-        self.sqlserver_radio.setText(QCoreApplication.translate("Form", u"SQL Server", None))
-        self.sqlite_radio.setText(QCoreApplication.translate("Form", u"SQLite", None))
-        self.database_add_new_button.setText(QCoreApplication.translate("Form", u"Add New Databases", None))
+    def retranslateUi(self, DatabasesPage):
+        DatabasesPage.setWindowTitle(QCoreApplication.translate("DatabasesPage", u"Form", None))
+        self.database_title_label.setText(QCoreApplication.translate("DatabasesPage", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700;\">Databases</span></p></body></html>", None))
+        self.mysql_radio.setText(QCoreApplication.translate("DatabasesPage", u"MySQL", None))
+        self.sqlserver_radio.setText(QCoreApplication.translate("DatabasesPage", u"SQL Server", None))
+        self.sqlite_radio.setText(QCoreApplication.translate("DatabasesPage", u"SQLite", None))
+        self.database_add_new_button.setText(QCoreApplication.translate("DatabasesPage", u"Add New Databases", None))
     # retranslateUi
 
