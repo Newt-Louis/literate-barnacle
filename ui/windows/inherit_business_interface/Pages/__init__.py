@@ -1,2 +1,3 @@
 from .Databases import DatabasesPageController, DatabasesServiceController
 from .Dashboard import DashboardPageController, DashboardServiceController
+from .Languages import LanguagesPageController, LanguagesServiceController

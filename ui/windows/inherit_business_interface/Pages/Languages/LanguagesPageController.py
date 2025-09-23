@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QWidget
 from ui.windows.origin_interface import Ui_LanguagesPage
 
 
-class DatabasesPageController(QWidget):
+class LanguagesPageController(QWidget):
     def __init__(self, model):
         super().__init__()
         self.model = model
