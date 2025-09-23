@@ -1,1 +1,2 @@
-from Databases import DatabasesPageController, DatabasesServiceController
+from .Databases import DatabasesPageController, DatabasesServiceController
+from .Dashboard import DashboardPageController, DashboardServiceController

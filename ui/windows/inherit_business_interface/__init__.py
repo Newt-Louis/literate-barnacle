@@ -1,2 +1,2 @@
-from Pages import DatabasesPageController
-from MainAppWindow import MainAppWindow
+from .Pages import DatabasesPageController, DatabasesServiceController, DashboardPageController, DashboardServiceController
+from .MainAppWindow import MainAppWindow
