@@ -6,6 +6,8 @@ from .Pages import (
     LanguagesPageController,
     LanguagesServiceController,
     NetworkPageController,
-    NetworkServiceController
+    NetworkServiceController,
+    ToolsPageController,
+    ToolsServiceController
 )
 from .MainAppWindow import MainAppWindow

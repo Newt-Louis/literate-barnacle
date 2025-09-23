@@ -1,6 +1,6 @@
 class NetworkServiceController:
-    def __init__(self, database_model):
-        self.database_model = database_model
+    def __init__(self, network_model):
+        self.network_model = network_model
 
     def _on_save_changes(self):
         print("Network Page Controller _on_save_changes")
