@@ -1,4 +1,4 @@
-class DashboardServiceController:
+class DatabasesServiceController:
     def __init__(self, database_model):
         self.database_model = database_model
 

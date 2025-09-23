@@ -3,6 +3,7 @@ from ui.windows.origin_interface import Ui_MainWindow
 from ui.windows.inherit_business_interface import DatabasesPageController
 from ui.windows.inherit_business_interface import DashboardPageController
 from ui.windows.inherit_business_interface import LanguagesPageController
+from ui.windows.inherit_business_interface import NetworkPageController
 
 class MainAppWindow(QMainWindow):
     def __init__(self):
@@ -15,7 +16,7 @@ class MainAppWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # Đặt tiêu đề cho cửa sổ
-        # self.setWindowTitle("Local WebServer Stacks Manager")
+        self.setWindowTitle("PyLWSSM")
 
         # Gọi phương thức để kết nối các tín hiệu (signals) và hành động (slots)
         self._connect_signals()
@@ -28,18 +29,19 @@ class MainAppWindow(QMainWindow):
         self.databases_page = DatabasesPageController(None)
         self.dashboard_page = DashboardPageController(None)
         self.languages_page = LanguagesPageController(None)
-        # self.languages_page = LanguagesPageController(self.core_model)
+        self.network_page = NetworkPageController(None)
 
         # Thêm chúng vào stacked widget
         self.ui.main_content_area.addWidget(self.databases_page)
         self.ui.main_content_area.addWidget(self.dashboard_page)
         self.ui.main_content_area.addWidget(self.languages_page)
+        self.ui.main_content_area.addWidget(self.network_page)
 
         # Kết nối các nút sidebar
         self.ui.databases_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.databases_page))
         self.ui.dashboard_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.dashboard_page))
         self.ui.languages_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.languages_page))
-        # ...
+        self.ui.network_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.network_page))
 
     def _connect_signals(self):
         """
@@ -55,4 +57,4 @@ class MainAppWindow(QMainWindow):
         # self.ui.webserver_button.clicked.connect(
         #     lambda: self.ui.main_content_area.setCurrentWidget(self.ui.webserver_page))
         # self.ui.tools_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.ui.tools_page))
-        # self.ui.network_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.ui.network_page))
+        self.ui.network_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.network_page))

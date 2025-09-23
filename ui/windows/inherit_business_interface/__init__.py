@@ -4,6 +4,8 @@ from .Pages import (
     DashboardPageController,
     DashboardServiceController,
     LanguagesPageController,
-    LanguagesServiceController
+    LanguagesServiceController,
+    NetworkPageController,
+    NetworkServiceController
 )
 from .MainAppWindow import MainAppWindow
