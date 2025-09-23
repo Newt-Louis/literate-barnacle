@@ -8,6 +8,8 @@ from .Pages import (
     NetworkPageController,
     NetworkServiceController,
     ToolsPageController,
-    ToolsServiceController
+    ToolsServiceController,
+    WebserverPageController,
+    WebserverServiceController
 )
 from .MainAppWindow import MainAppWindow

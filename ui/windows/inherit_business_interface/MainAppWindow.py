@@ -5,6 +5,7 @@ from ui.windows.inherit_business_interface import DashboardPageController
 from ui.windows.inherit_business_interface import LanguagesPageController
 from ui.windows.inherit_business_interface import NetworkPageController
 from ui.windows.inherit_business_interface import ToolsPageController
+from ui.windows.inherit_business_interface import WebserverPageController
 
 class MainAppWindow(QMainWindow):
     def __init__(self):
@@ -32,6 +33,7 @@ class MainAppWindow(QMainWindow):
         self.languages_page = LanguagesPageController(None)
         self.network_page = NetworkPageController(None)
         self.tools_page = ToolsPageController(None)
+        self.webserver_page = WebserverPageController(None)
 
         # Thêm chúng vào stacked widget
         self.ui.main_content_area.addWidget(self.databases_page)
@@ -39,6 +41,7 @@ class MainAppWindow(QMainWindow):
         self.ui.main_content_area.addWidget(self.languages_page)
         self.ui.main_content_area.addWidget(self.network_page)
         self.ui.main_content_area.addWidget(self.tools_page)
+        self.ui.main_content_area.addWidget(self.webserver_page)
 
         # Kết nối các nút sidebar
         self.ui.databases_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.databases_page))
@@ -46,6 +49,7 @@ class MainAppWindow(QMainWindow):
         self.ui.languages_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.languages_page))
         self.ui.network_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.network_page))
         self.ui.tools_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.tools_page))
+        self.ui.webserver_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.webserver_page))
 
     def _connect_signals(self):
         """
@@ -58,7 +62,7 @@ class MainAppWindow(QMainWindow):
             lambda: self.ui.main_content_area.setCurrentWidget(self.languages_page))
         self.ui.databases_button.clicked.connect(
             lambda: self.ui.main_content_area.setCurrentWidget(self.databases_page))
-        # self.ui.webserver_button.clicked.connect(
-        #     lambda: self.ui.main_content_area.setCurrentWidget(self.ui.webserver_page))
+        self.ui.webserver_button.clicked.connect(
+            lambda: self.ui.main_content_area.setCurrentWidget(self.webserver_page))
         self.ui.tools_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.tools_page))
         self.ui.network_button.clicked.connect(lambda: self.ui.main_content_area.setCurrentWidget(self.network_page))
