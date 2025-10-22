@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import QWidget
-# 1. Import lớp giao diện đã được build từ file .py
 from ui.windows.origin_interface import Ui_WebserverPage
 
 
@@ -8,17 +7,17 @@ class WebserverPageController(QWidget):
         super().__init__()
         self.model = model
 
-        # 2. Khởi tạo một đối tượng từ lớp giao diện
         self.ui = Ui_WebserverPage()
 
-        # 3. Dùng phương thức setupUi() để vẽ giao diện lên chính widget controller này (self)
         self.ui.setupUi(self)
 
-        # 4. Từ đây, mọi thứ giống hệt như trước!
-        # Kết nối signals và slots như bình thường.
-        # IDE của bạn bây giờ sẽ gợi ý code khi bạn gõ self.ui. ...
+        self.ui.apache_radio.setChecked(True)
+        self.ui.apache_radio.toggled.connect(self.on_webserver_changed)
+        self.ui.nginx_radio.toggled.connect(self.on_webserver_changed)
         self.ui.webserver_save_change_buttonbox.clicked.connect(self.on_save_changes)
-        self.ui.apache_checkbox.toggled.connect(self.on_apache_selected)
+
+        # Gọi cập nhật thay đổi cho lần đầu tiên
+        self.on_webserver_changed()
 
     def on_save_changes(self):
         print("Lưu cấu hình apache...")
@@ -26,3 +25,53 @@ class WebserverPageController(QWidget):
     def on_apache_selected(self, checked):
         if checked:
             print("Apache được chọn.")
+
+    def on_webserver_changed(self):
+        if self.ui.apache_radio.isChecked():
+            print("Apache đang được chọn")
+            self.ui.nginx_select_version_combobox.setVisible(False)
+            self.ui.nginx_excutable_lineEdit.setVisible(False)
+            self.ui.nginx_excutable_browseButton.setVisible(False)
+            self.ui.nginx_sites_enabled_lineEdit.setVisible(False)
+            self.ui.nginx_sites_enabled_browseButton.setVisible(False)
+            self.ui.nginx_listen_port_lineEdit.setVisible(False)
+            self.ui.nginx_config_tld_lineEdit.setVisible(False)
+            self.ui.nginx_alp_lineEdit.setVisible(False)
+            self.ui.nginx_alp_browseButton.setVisible(False)
+            self.ui.nginx_elp_lineEdit.setVisible(False)
+            self.ui.nginx_elp_browseButton.setVisible(False)
+            self.ui.apache_select_version_combobox.setVisible(True)
+            self.ui.apache_excutable_lineEdit.setVisible(True)
+            self.ui.apache_excutable_browseButton.setVisible(True)
+            self.ui.apache_sites_enabled_lineEdit.setVisible(True)
+            self.ui.apache_sites_enabled_browseButton.setVisible(True)
+            self.ui.apache_listen_port_lineEdit.setVisible(True)
+            self.ui.apache_config_tld_lineEdit.setVisible(True)
+            self.ui.apache_alp_lineEdit.setVisible(True)
+            self.ui.apache_alp_browseButton.setVisible(True)
+            self.ui.apache_elp_lineEdit.setVisible(True)
+            self.ui.apache_elp_browseButton.setVisible(True)
+        elif self.ui.nginx_radio.isChecked():
+            print("Nginx đang được chọn")
+            self.ui.nginx_select_version_combobox.setVisible(True)
+            self.ui.nginx_excutable_lineEdit.setVisible(True)
+            self.ui.nginx_excutable_browseButton.setVisible(True)
+            self.ui.nginx_sites_enabled_lineEdit.setVisible(True)
+            self.ui.nginx_sites_enabled_browseButton.setVisible(True)
+            self.ui.nginx_listen_port_lineEdit.setVisible(True)
+            self.ui.nginx_config_tld_lineEdit.setVisible(True)
+            self.ui.nginx_alp_lineEdit.setVisible(True)
+            self.ui.nginx_alp_browseButton.setVisible(True)
+            self.ui.nginx_elp_lineEdit.setVisible(True)
+            self.ui.nginx_elp_browseButton.setVisible(True)
+            self.ui.apache_select_version_combobox.setVisible(False)
+            self.ui.apache_excutable_lineEdit.setVisible(False)
+            self.ui.apache_excutable_browseButton.setVisible(False)
+            self.ui.apache_sites_enabled_lineEdit.setVisible(False)
+            self.ui.apache_sites_enabled_browseButton.setVisible(False)
+            self.ui.apache_listen_port_lineEdit.setVisible(False)
+            self.ui.apache_config_tld_lineEdit.setVisible(False)
+            self.ui.apache_alp_lineEdit.setVisible(False)
+            self.ui.apache_alp_browseButton.setVisible(False)
+            self.ui.apache_elp_lineEdit.setVisible(False)
+            self.ui.apache_elp_browseButton.setVisible(False)

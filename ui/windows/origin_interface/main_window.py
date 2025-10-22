@@ -18,13 +18,13 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QMainWindow, QMenuBar,
     QPushButton, QSizePolicy, QStackedWidget, QStatusBar,
     QToolButton, QVBoxLayout, QWidget)
-import icons_rc
+from ui.resources import icons_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1200, 600)
+        MainWindow.resize(1000, 800)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout_2 = QHBoxLayout(self.centralwidget)
@@ -78,7 +78,7 @@ class Ui_MainWindow(object):
 "    padding: 5px; /* T\u0103ng v\u00f9ng c\u00f3 th\u1ec3 click */\n"
 "}")
         icon = QIcon()
-        icon.addFile(u":/icons/icons/bars-1.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u":/icons/bars-1.svg", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.toggle_sidebar_button.setIcon(icon)
 
         self.verticalLayout_3.addWidget(self.toggle_sidebar_button)
@@ -138,7 +138,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1200, 33))
+        self.menubar.setGeometry(QRect(0, 0, 1000, 33))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -154,7 +154,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.toggle_sidebar_button.setText(QCoreApplication.translate("MainWindow", u"cbxcbxc", None))
+        self.toggle_sidebar_button.setText(QCoreApplication.translate("MainWindow", u"barsButton", None))
         self.dashboard_button.setText(QCoreApplication.translate("MainWindow", u"Dashboard", None))
         self.languages_button.setText(QCoreApplication.translate("MainWindow", u"Languages", None))
         self.databases_button.setText(QCoreApplication.translate("MainWindow", u"Databases", None))

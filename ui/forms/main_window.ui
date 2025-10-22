@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>600</height>
+    <width>1000</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -68,11 +68,11 @@
 }</string>
          </property>
          <property name="text">
-          <string>cbxcbxc</string>
+          <string>barsButton</string>
          </property>
          <property name="icon">
           <iconset resource="../resources/icons.qrc">
-           <normaloff>:/icons/icons/bars-1.svg</normaloff>:/icons/icons/bars-1.svg</iconset>
+           <normaloff>:/icons/bars-1.svg</normaloff>:/icons/bars-1.svg</iconset>
          </property>
         </widget>
        </item>
@@ -167,7 +167,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1200</width>
+     <width>1000</width>
      <height>33</height>
     </rect>
    </property>
