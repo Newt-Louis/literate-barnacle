@@ -1,14 +1,17 @@
-# core/services/webservers/webserver_service.py
 from core.repository import WebserverRepository
 from core.database.model.webserver import WebserverSetting
 
+class WebserverCoreService(WebserverRepository):
+    def __init__(self):
+        pass
 
-def load_settings(server_name: str) -> WebserverSetting | None:
+# noinspection PyUnresolvedReferences
+def load_settings(self,server_name: str) -> WebserverSetting | None:
     print(f"SERVICE: Đang tải cấu hình cho {server_name}...")
     return WebserverRepository.get_webserver_settings(server_name)
 
 
-def save_settings(settings_data: dict) -> bool:
+def save_settings(self,settings_data: dict) -> bool:
     """
     Nhận dữ liệu thô (dict) từ lớp UI, chuyển đổi và lưu lại.
     Đây là nơi chứa logic nghiệp vụ.
