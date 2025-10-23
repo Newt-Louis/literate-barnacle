@@ -31,7 +31,10 @@ def update_webserver_settings(setting: WebserverSetting):
                                sites_enabled_path = ?,
                                tld_template       = ?,
                                http_port          = ?,
-                               ssl_port           = ?
+                               ssl_port           = ?,
+                               alp_path           = ?,
+                               elp_path           = ?,
+                               is_enabled         = ?
                            WHERE server_name = ?
                            """, (
                                setting.selected_version,
@@ -40,6 +43,9 @@ def update_webserver_settings(setting: WebserverSetting):
                                setting.tld_template,
                                setting.http_port,
                                setting.ssl_port,
+                               setting.alp_path,
+                               setting.elp_path,
+                               setting.is_enabled,
                                setting.server_name
                            ))
             conn.commit()
