@@ -1,5 +1,5 @@
 from core.repository import WebserverRepository
-from core.database.model.webserver import WebserverSetting
+from core.database.model.webserver.WebserverSetting import WebserverSetting
 
 class WebserverCoreService:
     webserver_repository = WebserverRepository
