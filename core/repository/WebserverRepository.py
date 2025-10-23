@@ -6,7 +6,6 @@ from core.database.model import WebserverVersion
 DB_PATH = config.DB_PATH
 # noinspection PyUnresolvedReferences
 def get_webserver_settings(server_name: str) -> WebserverSetting | None:
-    """Lấy cài đặt cho một web server và trả về một đối tượng WebserverSetting."""
     try:
         with sqlite3.connect(DB_PATH) as conn:
             conn.row_factory = sqlite3.Row
@@ -57,15 +56,32 @@ def update_webserver_settings(setting: WebserverSetting):
         print(f"Lỗi database khi cập nhật {setting.server_name}: {e}")
         return False
 
-def sync_versions_to_db(server_type: str, directory_path: str):
-    """
-    Quét một thư mục, xóa các phiên bản cũ trong DB và cập nhật lại
-    với danh sách các thư mục hiện có.
+def get_all_webserver_versions() -> dict[str, list[tuple]]:
+    versions_dict = {
+        "apache": [],
+        "nginx": []
+    }
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute(""" SELECT * FROM webserver_versions """)
+            rows = cursor.fetchall()
 
-    Args:
-        server_type (str): 'apache' hoặc 'nginx'.
-        directory_path (str): Đường dẫn đến thư mục cần quét (ví dụ: .../bin/apache).
-    """
+            for row in rows:
+                # row[1] sẽ là cột 'type' ('apache' hoặc 'nginx')
+                server_type = row[1]
+
+                # Kiểm tra xem type có hợp lệ không và thêm vào danh sách tương ứng
+                if server_type in versions_dict:
+                    versions_dict[server_type].append(row)
+
+            return versions_dict
+    except sqlite3.Error as e:
+        print(f"Lỗi database khi lấy danh sách phiên bản: {e}")
+        # Trả về dict rỗng nếu có lỗi để tránh ứng dụng bị crash
+        return {"apache": [], "nginx": []}
+
+def sync_versions_to_db(server_type: str, directory_path: str):
     print(f"Bắt đầu đồng bộ hóa phiên bản cho '{server_type}' từ: {directory_path}")
 
     # Bước 1: Quét thư mục để lấy danh sách các phiên bản hiện tại
