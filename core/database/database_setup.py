@@ -10,11 +10,11 @@ def run_migrations():
     cursor = conn.cursor()
 
     # 1. Tạo bảng theo dõi phiên bản nếu chưa có
-    cursor.execute("""CREATE TABLE IF NOT EXISTS schema_version ('
+    cursor.execute("""CREATE TABLE IF NOT EXISTS schema_version (
                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                     filename TEXT NOT NULL UNIQUE,
                     applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                   ');""")
+                   );""")
     conn.commit()
 
     # 2. Lấy danh sách các migration đã được áp dụng từ DB
@@ -50,7 +50,7 @@ def run_migrations():
                 print(f"ERROR applying migration {filename}: {e}")
                 conn.rollback()  # Hoàn tác nếu có lỗi
                 conn.close()
-                return  # Dừng lại ngay lập tức
+                return
 
     print("All migrations are up to date.")
     conn.close()
