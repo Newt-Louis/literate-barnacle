@@ -35,3 +35,5 @@ def save_settings(self,settings_data: dict) -> bool:
     except Exception as e:
         print(f"SERVICE ERROR: {e}")
         return False
+
+def load_webservers_versions(self)

@@ -1,21 +1,24 @@
 from core.services.webservers import WebserverCoreService
 
 class WebserverServiceController:
-    def __init__(self, webserver_model):
-        self.webserver_model = webserver_model
+    def __init__(self, webserver_core_service: WebserverCoreService):
+        self.webserver_core_service = webserver_core_service
 
-    def on_save_changes(self):
+    def save_changes(self):
         print("Webserver Page Controller _on_save_changes")
 
-    def on_cancel_changes(self):
+    def cancel_changes(self):
         print("Webserver Page Controller _on_cancel_changes")
 
-    def on_add_new_data(self):
+    def add_new_data(self):
         print("Webserver Page Controller _on_add_new_data")
 
-    def on_update_data(self):
+    def update_data(self):
         print("Webserver Page Controller _on_update_data")
 
-    def on_load_data(self,server_name):
+    def load_data(self,server_name):
         print("Webserver Page Controller on_load_data")
-        return WebserverCoreService.load_settings(server_name)
+        return self.webserver_core_service.load_settings(server_name)
+
+    def on_load_webservers_version(self):
+        return self.webserver_core_service

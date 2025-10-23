@@ -1,9 +1,7 @@
-import sqlite3
 from core.config import config
 from typing import Optional
 
 class WebserverSetting:
-    DB_PATH = config.DB_PATH
     def __init__(self, server_name: str,
                  id: Optional[int] = None,
                  selected_version: Optional[str] = None,
