@@ -1,8 +1,8 @@
 from core.services.webservers import WebserverCoreService
 
 class WebserverServiceController:
-    def __init__(self, webserver_core_service: WebserverCoreService):
-        self.webserver_core_service = webserver_core_service
+    def __init__(self):
+        self.webserver_core_service = WebserverCoreService()
 
     def save_changes(self):
         print("Webserver Page Controller _on_save_changes")
@@ -20,5 +20,5 @@ class WebserverServiceController:
         print("Webserver Page Controller on_load_data")
         return self.webserver_core_service.load_settings(server_name)
 
-    def on_load_webservers_version(self):
-        return self.webserver_core_service
+    def load_webservers_version(self):
+        return self.webserver_core_service.load_webservers_versions()

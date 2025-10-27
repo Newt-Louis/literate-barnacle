@@ -1,4 +1,6 @@
 from PySide6.QtWidgets import QWidget, QRadioButton, QFileDialog
+
+from .WebserverServiceController import WebserverServiceController
 from ui.windows.origin_interface import Ui_WebserverPage
 
 
@@ -16,6 +18,7 @@ class WebserverPageController(QWidget):
     def __init__(self, model):
         super().__init__()
         self.model = model
+        self.service_controller = WebserverServiceController()
         self.ui = Ui_WebserverPage()
         self.ui.setupUi(self)
 
@@ -33,6 +36,8 @@ class WebserverPageController(QWidget):
         self.ui.apache_radio.setChecked(True)
         # Gọi cập nhật thay đổi disabled cho lần đầu tiên
         self.on_webserver_changed()
+        versions = self.service_controller.load_webservers_version()
+        print(versions)
 
     def on_save_changes(self):
         print("Lưu cấu hình apache...")

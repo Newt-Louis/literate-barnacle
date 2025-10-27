@@ -56,20 +56,21 @@ def update_webserver_settings(setting: WebserverSetting):
         print(f"Lỗi database khi cập nhật {setting.server_name}: {e}")
         return False
 
-def get_all_webserver_versions() -> dict[str, list[tuple]]:
+def get_all_webserver_versions() -> dict[str, list[sqlite3.Row]]:
     versions_dict = {
         "apache": [],
         "nginx": []
     }
     try:
         with sqlite3.connect(DB_PATH) as conn:
+            conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
             cursor.execute(""" SELECT * FROM webserver_versions """)
             rows = cursor.fetchall()
 
             for row in rows:
-                # row[1] sẽ là cột 'type' ('apache' hoặc 'nginx')
-                server_type = row[1]
+                # sử dụng sqlite3.Row để gọi được tên cột
+                server_type = row["type"]
 
                 # Kiểm tra xem type có hợp lệ không và thêm vào danh sách tương ứng
                 if server_type in versions_dict:
