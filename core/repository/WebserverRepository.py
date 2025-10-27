@@ -86,12 +86,10 @@ def sync_versions_to_db(server_type: str, directory_path: str):
 
     # Bước 1: Quét thư mục để lấy danh sách các phiên bản hiện tại
     try:
-        # Lấy tất cả các mục trong thư mục và chỉ giữ lại những mục là thư mục con
-        versions = [
+        versions = {
             name for name in os.listdir(directory_path)
             if os.path.isdir(os.path.join(directory_path, name))
-        ]
-        print(f"Đã phát hiện các phiên bản: {versions}")
+        }
     except FileNotFoundError:
         print(f"LỖI: Không tìm thấy thư mục: {directory_path}")
         return
@@ -100,12 +98,19 @@ def sync_versions_to_db(server_type: str, directory_path: str):
     try:
         with sqlite3.connect(DB_PATH) as conn:
             cursor = conn.cursor()
+            # Kiểm tra đồng bộ dữ liệu
+            cursor.execute("SELECT version FROM webserver_versions WHERE type = ?", (server_type,))
+            versions_in_db = {row[0] for row in cursor.fetchall()}
+            if versions == versions_in_db:
+                print("✅ Dữ liệu đã đồng bộ. Không cần cập nhật.")
+                return
 
-            # Bước 2a: Xóa TẤT CẢ các dòng có type tương ứng
+    # Bước 3: Xóa TẤT CẢ các dòng có type tương ứng
+            print(f"Phát hiện các phiên bản có thay đổi: {versions}")
             print(f"Đang xóa các phiên bản '{server_type}' cũ khỏi database...")
             cursor.execute("DELETE FROM webserver_versions WHERE type = ?", (server_type,))
 
-            # Bước 2b: Chèn lại danh sách phiên bản mới
+    # Bước 4: Chèn lại danh sách phiên bản mới
             if versions:
                 print(f"Đang chèn các phiên bản mới vào database...")
                 # Chuẩn bị dữ liệu dưới dạng list of tuples
