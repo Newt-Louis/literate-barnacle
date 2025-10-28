@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import QWidget, QRadioButton, QFileDialog
+from PySide6.QtWidgets import QWidget, QRadioButton, QFileDialog, QMessageBox
 
 from .WebserverServiceController import WebserverServiceController
 from ui.windows.origin_interface import Ui_WebserverPage
@@ -44,7 +44,45 @@ class WebserverPageController(QWidget):
 
 
     def on_save_changes(self):
-        print("Lưu cấu hình ...")
+        config_data = {}
+        active_server_prefix = ""
+
+        if self.ui.apache_radio.isChecked():
+            active_server_prefix = "apache_"
+            config_data["type"] = "apache"
+        elif self.ui.nginx_radio.isChecked():
+            active_server_prefix = "nginx_"
+            config_data["type"] = "nginx"
+
+        # Sử dụng getattr để lấy widget một cách linh động dựa trên prefix
+        config_data['selected_version'] = getattr(self.ui, f"{active_server_prefix}select_version_combobox").currentText()
+        config_data['executable_path'] = getattr(self.ui,f"{active_server_prefix}excutable_lineEdit").text().strip()
+        config_data['sites_enabled_path'] = getattr(self.ui,f"{active_server_prefix}sites_enabled_lineEdit").text().strip()
+        config_data['listen_port'] = getattr(self.ui, f"{active_server_prefix}listen_port_lineEdit").text().strip()
+        config_data['tld'] = getattr(self.ui, f"{active_server_prefix}config_tld_lineEdit").text().strip()
+        config_data['access_log_path'] = getattr(self.ui, f"{active_server_prefix}alp_lineEdit").text().strip()
+        config_data['error_log_path'] = getattr(self.ui, f"{active_server_prefix}elp_lineEdit").text().strip()
+
+        required_fields = {
+            'executable_path': "Excutable path",
+            'sites_enabled_path': "Sites-Enabled path",
+            'listen_port': "Listen port",
+            'selected_version': "Version",
+        }
+
+        for field_key, field_name in required_fields.items():
+            if not config_data[field_key]:
+                QMessageBox.warning(self, "Thiếu thông tin", f"'{field_name}' không được để trống!")
+                return
+
+        # Nếu tất cả các trường bắt buộc đều hợp lệ, bạn có thể tiến hành lưu
+        print("Dữ liệu hợp lệ, đang tiến hành lưu...")
+        print(config_data)
+
+        # TODO: Tại đây, bạn sẽ gọi một phương thức từ service_controller để lưu dữ liệu này
+        # Ví dụ: self.service_controller.save_webserver_config(config_data)
+
+        QMessageBox.information(self, "Thành công", "Đã lưu cấu hình webserver thành công!")
 
     def on_apache_selected(self, checked):
         if checked:
