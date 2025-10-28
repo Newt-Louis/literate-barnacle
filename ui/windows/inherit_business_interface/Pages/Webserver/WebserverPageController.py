@@ -36,15 +36,23 @@ class WebserverPageController(QWidget):
         self.ui.apache_radio.setChecked(True)
         # Gọi cập nhật thay đổi disabled cho lần đầu tiên
         self.on_webserver_changed()
+
+        # Điền thông tin phiên bản
         versions = self.service_controller.load_webservers_version()
-        print(versions)
+        self.ui.apache_select_version_combobox.addItems([version["version"] for version in versions["apache"]])
+        self.ui.nginx_select_version_combobox.addItems([version["version"] for version in versions["nginx"]])
+
 
     def on_save_changes(self):
-        print("Lưu cấu hình apache...")
+        print("Lưu cấu hình ...")
 
     def on_apache_selected(self, checked):
         if checked:
             print("Apache được chọn.")
+
+    def on_nginx_selected(self, checked):
+        if checked:
+            print("Nginx được chọn.")
 
     def set_group_enabled(self, prefix, enabled):
         for widget in self.findChildren(QWidget):
