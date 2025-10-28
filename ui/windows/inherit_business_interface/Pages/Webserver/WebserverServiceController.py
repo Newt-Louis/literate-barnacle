@@ -16,9 +16,13 @@ class WebserverServiceController:
     def update_data(self):
         print("Webserver Page Controller _on_update_data")
 
-    def load_data(self,server_name):
-        print("Webserver Page Controller on_load_data")
-        return self.webserver_core_service.load_settings(server_name)
+    def load_data(self):
+        try:
+            settings_data = self.webserver_core_service.load_settings()
+            return None if settings_data is None else settings_data
+        except Exception as e:
+            print(e)
+            raise
 
     def load_webservers_version(self):
         return self.webserver_core_service.load_webservers_versions()

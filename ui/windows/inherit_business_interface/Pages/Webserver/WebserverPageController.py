@@ -15,6 +15,15 @@ class WebserverPageController(QWidget):
         "nginx_alp_browseButton": ("folder", "nginx_alp_lineEdit", ""),
         "nginx_elp_browseButton": ("folder", "nginx_elp_lineEdit", ""),
     }
+    WIDGET_MAP = {
+        'selected_version': ('select_version_combobox', 'QComboBox'),
+        'executable_path': ('excutable_lineEdit', 'QLineEdit'),
+        'sites_enabled_path': ('sites_enabled_lineEdit', 'QLineEdit'),
+        'http_port': ('listen_port_lineEdit', 'QLineEdit'),
+        'tld_template': ('config_tld_lineEdit', 'QLineEdit'),
+        'alp_path': ('alp_lineEdit', 'QLineEdit'),
+        'elp_path': ('elp_lineEdit', 'QLineEdit'),
+    }
     def __init__(self, model):
         super().__init__()
         self.model = model
@@ -41,6 +50,20 @@ class WebserverPageController(QWidget):
         versions = self.service_controller.load_webservers_version()
         self.ui.apache_select_version_combobox.addItems([version["version"] for version in versions["apache"]])
         self.ui.nginx_select_version_combobox.addItems([version["version"] for version in versions["nginx"]])
+
+        # Hiển thị thông tin đang được lưu
+        try:
+            current_data = self.service_controller.load_data()
+            if current_data is not None:
+                server_name = current_data.server_name
+                handler_function_name = f"on_{server_name}_selected"
+                if hasattr(self, handler_function_name):
+                    handler_function = getattr(self, handler_function_name)
+                    handler_function(current_data)
+                else:
+                    print(f"Không tìm thấy phương thức {handler_function_name} tương ứng")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
 
 
     def on_save_changes(self):
@@ -82,13 +105,39 @@ class WebserverPageController(QWidget):
         QMessageBox.information(self, "Thành công", "Đã lưu cấu hình webserver thành công!") \
             if result else QMessageBox.critical(self,"Lỗi","Có lỗi xảy ra trong quá trình lưu cấu hình!")
 
-    def on_apache_selected(self, checked):
-        if checked:
-            print("Apache được chọn.")
+    def on_apache_selected(self,data):
+        self._populate_form_with_data(data)
 
-    def on_nginx_selected(self, checked):
-        if checked:
-            print("Nginx được chọn.")
+    def on_nginx_selected(self,data):
+        self._populate_form_with_data(data)
+
+    def _populate_form_with_data(self, data):
+        # 1. Xác định tiền tố dựa trên dữ liệu (ví dụ: 'apache_')
+        prefix = f"{data.server_name}_"
+
+        # 2. Lặp qua bản đồ WIDGET_MAP
+        for data_attribute, (widget_suffix, widget_type) in self.__class__.WIDGET_MAP.items():
+            try:
+                # 3. Dùng getattr để lấy giá trị từ đối tượng data
+                # Ví dụ: data.executable_path
+                value = getattr(data, data_attribute)
+
+                # 4. Xây dựng tên đầy đủ của widget
+                # Ví dụ: 'apache_excutable_lineEdit'
+                widget_name = f"{prefix}{widget_suffix}"
+
+                # 5. Dùng getattr để lấy đối tượng widget thực sự từ self.ui
+                widget = getattr(self.ui, widget_name)
+
+                # 6. Điền dữ liệu dựa trên loại widget
+                if widget_type == 'QLineEdit':
+                    widget.setText(str(value) if value is not None else "")
+                elif widget_type == 'QComboBox':
+                    widget.setCurrentText(value if value is not None else "")
+
+            except AttributeError:
+                # Bỏ qua nếu không tìm thấy widget hoặc thuộc tính, tránh crash
+                print(f"Cảnh báo: Không tìm thấy widget '{widget_name}' hoặc thuộc tính '{data_attribute}'.")
 
     def set_group_enabled(self, prefix, enabled):
         for widget in self.findChildren(QWidget):

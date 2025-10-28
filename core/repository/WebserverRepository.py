@@ -5,12 +5,12 @@ from core.database.model import WebserverVersion
 
 DB_PATH = config.DB_PATH
 # noinspection PyUnresolvedReferences
-def get_webserver_settings(server_name: str) -> WebserverSetting | None:
+def get_webserver_settings() -> WebserverSetting | None:
     try:
         with sqlite3.connect(DB_PATH) as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM webserver_settings WHERE server_name = ?", (server_name,))
+            cursor.execute("SELECT * FROM webserver_settings WHERE is_enabled = 1")
             row = cursor.fetchone()
 
             if row:
@@ -18,7 +18,7 @@ def get_webserver_settings(server_name: str) -> WebserverSetting | None:
             return None
     except sqlite3.Error as e:
         print(f"Lỗi database khi lấy cài đặt {server_name}: {e}")
-        return None
+        raise
 
 
 def update_webserver_settings(setting: WebserverSetting):

@@ -8,17 +8,20 @@ class WebserverCoreService:
         pass
 
     # noinspection PyUnresolvedReferences
-    def load_settings(self, server_name: str) -> WebserverSetting | None:
-        print(f"SERVICE: Đang tải cấu hình cho {server_name}...")
-        return self.__class__.webserver_repository.get_webserver_settings(server_name)
-
+    def load_settings(self) -> WebserverSetting | None:
+        print(f"SERVICE: Đang tải cấu hình...")
+        try:
+            settings_data = self.__class__.webserver_repository.get_webserver_settings()
+            return None if settings_data is None else settings_data
+        except:
+            raise
 
     def save_settings(self, settings_data: dict) -> bool:
         print(settings_data.get("type"))
         try:
             model_data = {
                 'server_name': settings_data.get('type'),
-                'selected_version': settings_data.get('version'),
+                'selected_version': settings_data.get('selected_version'),
                 'executable_path': settings_data.get('executable_path'),
                 'sites_enabled_path': settings_data.get('sites_enabled_path'),
                 'tld_template': settings_data.get('tld'),
