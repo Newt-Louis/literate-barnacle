@@ -15,17 +15,22 @@ class WebserverCoreService:
 
     def save_settings(self, settings_data: dict) -> bool:
         try:
-            # Business Logic 1: Chuyển đổi dict thành Model object
+            model_data = {
+                'server_name': settings_data.get('type'),
+                'selected_version': settings_data.get('version'),
+                'executable_path': settings_data.get('executable_path'),
+                'sites_enabled_path': settings_data.get('sites_enabled_path'),
+                'tld_template': settings_data.get('tld'),
+                'http_port': settings_data.get('listen_port'),
+                'ssl_port': None,
+                'alp_path': settings_data.get('access_log_path'),
+                'elp_path': settings_data.get('error_log_path'),
+                'is_enabled': True
+            }
             setting_model = WebserverSetting(**settings_data)
 
-            # Business Logic 2: (Ví dụ) Kiểm tra dữ liệu
-            if setting_model.http_port == setting_model.ssl_port:
-                raise ValueError("Cổng HTTP và SSL không được trùng nhau.")
-
-            # Gọi xuống lớp CRUD để thực hiện lưu trữ
             success = self.__class__.webserver_repository.update_webserver_settings(setting_model)
 
-            # Business Logic 3: (Ví dụ) Ghi log
             if success:
                 print(f"SERVICE: Đã lưu thành công cho {setting_model.server_name}.")
 

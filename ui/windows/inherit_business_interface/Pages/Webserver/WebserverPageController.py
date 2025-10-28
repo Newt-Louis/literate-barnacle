@@ -77,12 +77,10 @@ class WebserverPageController(QWidget):
 
         # Nếu tất cả các trường bắt buộc đều hợp lệ, bạn có thể tiến hành lưu
         print("Dữ liệu hợp lệ, đang tiến hành lưu...")
-        print(config_data)
+        result = self.service_controller.save_changes(config_data)
 
-        # TODO: Tại đây, bạn sẽ gọi một phương thức từ service_controller để lưu dữ liệu này
-        # Ví dụ: self.service_controller.save_webserver_config(config_data)
-
-        QMessageBox.information(self, "Thành công", "Đã lưu cấu hình webserver thành công!")
+        QMessageBox.information(self, "Thành công", "Đã lưu cấu hình webserver thành công!") \
+            if result else QMessageBox.critical(self,"Lỗi","Có lỗi xảy ra trong quá trình lưu cấu hình!")
 
     def on_apache_selected(self, checked):
         if checked:
