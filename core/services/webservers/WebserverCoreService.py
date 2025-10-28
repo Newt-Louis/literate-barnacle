@@ -14,6 +14,7 @@ class WebserverCoreService:
 
 
     def save_settings(self, settings_data: dict) -> bool:
+        print(settings_data.get("type"))
         try:
             model_data = {
                 'server_name': settings_data.get('type'),
@@ -27,7 +28,10 @@ class WebserverCoreService:
                 'elp_path': settings_data.get('error_log_path'),
                 'is_enabled': True
             }
-            setting_model = WebserverSetting(**settings_data)
+            setting_model = WebserverSetting(**model_data)
+
+            if not self.webserver_repository.disable_all_webservers():
+                raise Exception
 
             success = self.__class__.webserver_repository.update_webserver_settings(setting_model)
 

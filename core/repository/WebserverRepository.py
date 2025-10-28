@@ -79,7 +79,6 @@ def get_all_webserver_versions() -> dict[str, list[sqlite3.Row]]:
             return versions_dict
     except sqlite3.Error as e:
         print(f"Lỗi database khi lấy danh sách phiên bản: {e}")
-        # Trả về dict rỗng nếu có lỗi để tránh ứng dụng bị crash
         return {"apache": [], "nginx": []}
 
 def sync_versions_to_db(server_type: str, directory_path: str):
@@ -116,7 +115,7 @@ def sync_versions_to_db(server_type: str, directory_path: str):
                 print(f"Đang chèn các phiên bản mới vào database...")
                 # Chuẩn bị dữ liệu dưới dạng list of tuples
                 data_to_insert = [(server_type, version) for version in versions]
-                # Dùng executemany để chèn nhiều dòng cùng lúc, rất hiệu quả
+                # Dùng executemany để chèn nhiều dòng cùng lúc
                 cursor.executemany(
                     "INSERT INTO webserver_versions (type, version) VALUES (?, ?)",
                     data_to_insert
@@ -126,3 +125,13 @@ def sync_versions_to_db(server_type: str, directory_path: str):
             print(f"Đồng bộ hóa cho '{server_type}' hoàn tất.")
     except sqlite3.Error as e:
         print(f"LỖI DATABASE khi đồng bộ hóa: {e}")
+
+def disable_all_webservers() -> bool:
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE webserver_settings SET is_enabled = 0")
+            conn.commit()
+            return True
+    except sqlite3.Error as e:
+        return False
