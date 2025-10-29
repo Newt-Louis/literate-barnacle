@@ -34,10 +34,13 @@ class DashboardPageController(QWidget):
         print("Webserver đang chạy...")
 
     def start_tools(self):
-        print("Tool ... đang chạy")
+        print("Tool redis hoặc memcached hoặc terminal độc lập của ứng dụng đang chạy")
 
     def start_language(self):
         print("Ngôn ngữ được chọn hoặc thư mục gốc của ngôn ngữ được thay đổi")
+
+    def start_network(self):
+        print("Chạy độc lập loại network nào đó ví dụ ngrok hoặc telnet")
 
     def listener_webserver_saved(self,data):
         print("đã nhận được dữ liệu sau khi lưu từ webserver",data)
@@ -45,3 +48,15 @@ class DashboardPageController(QWidget):
         self.ui.webserver_version_label.setText(data["selected_version"])
 
         print("cập nhật thông tin webserver thành công") if self.dashboard_service.update_webserver_info(data) else print("có lỗi khi cập nhật với sqlite")
+
+    def listener_database_saved(self,data):
+        print("nhận emit từ database rồi lưu thông tin")
+
+    def listener_language_saved(self,data):
+        print("nhận emit từ language rồi lưu thông tin")
+
+    def listener_network_saved(self,data):
+        print("nhận emit từ network rồi lưu thông tin")
+
+    def listener_tool_saved(self,data):
+        print("nhận emit từ tool rồi lưu thông tin")
