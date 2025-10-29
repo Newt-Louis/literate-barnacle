@@ -1,7 +1,5 @@
 import sqlite3, os
 from core.config import config
-from core.database.model import WebserverSetting
-from core.database.model import WebserverVersion
 from core.database.model.webserver.WebserverSetting import WebserverSetting
 
 DB_PATH = config.DB_PATH

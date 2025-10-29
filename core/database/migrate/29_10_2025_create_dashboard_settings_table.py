@@ -16,7 +16,7 @@ def up(cursor: sqlite3.Cursor):
     cursor.execute("INSERT OR IGNORE INTO dashboard_settings (service, type, version) VALUES ('database', 'MySQL', '');")
     cursor.execute("INSERT OR IGNORE INTO dashboard_settings (service, type, version) VALUES ('language', 'PHP', '');")
     cursor.execute("INSERT OR IGNORE INTO dashboard_settings (service, type, version) VALUES ('webserver', 'nginx', '');")
-    cursor.execute("INSERT OR IGNORE INTO dashboard_settings (service, type, version) VALUES ('tools', 'telnet', '');")
+    cursor.execute("INSERT OR IGNORE INTO dashboard_settings (service, type, version) VALUES ('tool', 'telnet', '');")
 
 # Hàm down để hoàn tác
 def down(cursor: sqlite3.Cursor):
