@@ -9,10 +9,10 @@ class WebserverCoreService:
         pass
 
     # noinspection PyUnresolvedReferences
-    def load_settings(self) -> WebserverSetting | None:
+    def load_settings(self) -> list[WebserverSetting] | None:
         print(f"SERVICE: Đang tải cấu hình...")
         try:
-            settings_data = self.__class__.webserver_repository.get_webserver_settings()
+            settings_data = self.__class__.webserver_repository.get_all_webserver_settings()
             return None if settings_data is None else settings_data
         except:
             raise
@@ -25,7 +25,7 @@ class WebserverCoreService:
                 'selected_version': settings_data.get('selected_version'),
                 'executable_path': settings_data.get('executable_path'),
                 'sites_enabled_path': settings_data.get('sites_enabled_path'),
-                'tld_template': settings_data.get('tld'),
+                'tld_template': settings_data.get('tld') if settings_data.get('tld') else '.test',
                 'http_port': settings_data.get('listen_port'),
                 'ssl_port': None,
                 'alp_path': settings_data.get('access_log_path'),

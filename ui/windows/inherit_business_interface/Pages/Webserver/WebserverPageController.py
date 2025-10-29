@@ -41,29 +41,32 @@ class WebserverPageController(QWidget):
             if name.endswith("_browseButton"):
                 button.clicked.connect(self.on_browse_button_clicked)
 
-        # Set mặc định chọn radio apache đầu tiên
-        self.ui.apache_radio.setChecked(True)
-        # Gọi cập nhật thay đổi disabled cho lần đầu tiên
-        self.on_webserver_changed()
+        # Hiển thị thông tin đang được lưu
+        try:
+            current_data = self.service_controller.load_data()
+        except Exception as e:
+            QMessageBox.critical(self, "Error", str(e))
+            current_data = None
+
+        if current_data is not None:
+            for webserver in current_data:
+                server_name = webserver.server_name
+                handler_function_name = f"on_{server_name}_selected"
+                setradio_checked = f"{server_name}_radio"
+                if hasattr(self, handler_function_name):
+                    handler_function = getattr(self, handler_function_name)
+                    handler_function(webserver)
+                else:
+                    print(f"Không tìm thấy phương thức {handler_function_name} tương ứng")
+                if webserver.is_enabled:
+                    radio_button = getattr(self.ui, setradio_checked)
+                    radio_button.setChecked(True)
+                    self.on_webserver_changed()
 
         # Điền thông tin phiên bản
         versions = self.service_controller.load_webservers_version()
         self.ui.apache_select_version_combobox.addItems([version["version"] for version in versions["apache"]])
         self.ui.nginx_select_version_combobox.addItems([version["version"] for version in versions["nginx"]])
-
-        # Hiển thị thông tin đang được lưu
-        try:
-            current_data = self.service_controller.load_data()
-            if current_data is not None:
-                server_name = current_data.server_name
-                handler_function_name = f"on_{server_name}_selected"
-                if hasattr(self, handler_function_name):
-                    handler_function = getattr(self, handler_function_name)
-                    handler_function(current_data)
-                else:
-                    print(f"Không tìm thấy phương thức {handler_function_name} tương ứng")
-        except Exception as e:
-            QMessageBox.critical(self, "Error", str(e))
 
 
     def on_save_changes(self):

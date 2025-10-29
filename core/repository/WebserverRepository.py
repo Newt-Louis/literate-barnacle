@@ -2,19 +2,20 @@ import sqlite3, os
 from core.config import config
 from core.database.model import WebserverSetting
 from core.database.model import WebserverVersion
+from core.database.model.webserver.WebserverSetting import WebserverSetting
 
 DB_PATH = config.DB_PATH
 # noinspection PyUnresolvedReferences
-def get_webserver_settings() -> WebserverSetting | None:
+def get_all_webserver_settings() -> list[WebserverSetting] | None:
     try:
         with sqlite3.connect(DB_PATH) as conn:
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM webserver_settings WHERE is_enabled = 1")
-            row = cursor.fetchone()
+            cursor.execute("SELECT * FROM webserver_settings")
+            rows = cursor.fetchall()
 
-            if row:
-                return WebserverSetting(**dict(row))
+            if rows:
+                return [WebserverSetting(**dict(row)) for row in rows]
             return None
     except sqlite3.Error as e:
         print(f"Lỗi database khi lấy cài đặt {server_name}: {e}")
