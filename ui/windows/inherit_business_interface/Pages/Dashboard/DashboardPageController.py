@@ -1,24 +1,17 @@
 from PySide6.QtWidgets import QWidget
-# 1. Import lớp giao diện đã được build từ file .py
 from ui.windows.origin_interface import Ui_DashboardPage
+from core.manager.EventBus import EventBus
 
 
 class DashboardPageController(QWidget):
     def __init__(self, model):
         super().__init__()
         self.model = model
-
-        # 2. Khởi tạo một đối tượng từ lớp giao diện
         self.ui = Ui_DashboardPage()
-
-        # 3. Dùng phương thức setupUi() để vẽ giao diện lên chính widget controller này (self)
         self.ui.setupUi(self)
 
-        # 4. Từ đây, mọi thứ giống hệt như trước!
-        # Kết nối signals và slots như bình thường.
-        # IDE của bạn bây giờ sẽ gợi ý code khi bạn gõ self.ui. ...
         self.ui.startall_button.clicked.connect(self.on_save_changes)
-        # self.ui.mysql_radio.toggled.connect(self.on_mysql_selected)
+        EventBus.webserver_saved.connect(self.listener_webserver_saved)
 
     def on_save_changes(self):
         print("Lưu cấu hình databases...")
@@ -28,3 +21,8 @@ class DashboardPageController(QWidget):
     def on_mysql_selected(self, checked):
         if checked:
             print("MySQL được chọn.")
+
+    def listener_webserver_saved(self,data):
+        print("đã nhận được dữ liệu sau khi lưu từ webserver",data)
+        self.ui.webserver_type_label.setText(data["server_name"])
+        self.ui.webserver_version_label.setText(data["selected_version"])

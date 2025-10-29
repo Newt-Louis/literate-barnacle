@@ -1,5 +1,6 @@
 from core.repository import WebserverRepository
 from core.database.model.webserver.WebserverSetting import WebserverSetting
+from core.manager.EventBus import EventBus
 
 class WebserverCoreService:
     webserver_repository = WebserverRepository
@@ -40,6 +41,7 @@ class WebserverCoreService:
 
             if success:
                 print(f"SERVICE: Đã lưu thành công cho {setting_model.server_name}.")
+                EventBus.webserver_saved.emit(setting_model.__dict__)
 
             return success
         except Exception as e:

@@ -11,6 +11,6 @@ if __name__ == "__main__":
     run_migrations()
     run_all_startup_syncs()
     print("Đồng bộ hóa hoàn tất.")
-    watcher = start_watching()
+    start_watching()
     window.show()
     sys.exit(app.exec())
