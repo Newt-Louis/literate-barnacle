@@ -1,18 +1,25 @@
-class LanguagesServiceController:
-    def __init__(self, languages_model):
-        self.languages_model = languages_model
+from core.services.languages import LanguageCoreService
 
-    def _on_save_changes(self):
+class LanguagesServiceController:
+    def __init__(self):
+        self.language_core_service = LanguageCoreService()
+
+    def save_changes(self):
         print("Languages Page Controller _on_save_changes")
 
-    def _on_cancel_changes(self):
+    def cancel_changes(self):
         print("Languages Page Controller _on_cancel_changes")
 
-    def _on_add_new_data(self):
+    def add_new_data(self):
         print("Languages Page Controller _on_add_new_data")
 
-    def _on_update_data(self):
+    def update_data(self):
         print("Languages Page Controller _on_update_data")
 
-    def _on_load_data(self):
-        print("Languages Page Controller _on_load_data")
+    def load_data(self):
+        try:
+            data = self.language_core_service.load_settings()
+            return None if data is None else data
+        except Exception as e:
+            print(e)
+            raise

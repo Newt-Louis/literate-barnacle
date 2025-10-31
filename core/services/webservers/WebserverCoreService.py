@@ -1,5 +1,5 @@
 from core.repository import WebserverRepository
-from core.database.model.webservers.WebserverSetting import WebserverSetting
+from core.database.model import WebserverSetting
 from core.manager.EventBus import EventBus
 
 class WebserverCoreService:
