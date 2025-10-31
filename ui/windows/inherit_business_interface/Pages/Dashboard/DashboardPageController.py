@@ -20,10 +20,9 @@ class DashboardPageController(QWidget):
         self.ui.startall_button.clicked.connect(self.on_save_changes)
 
     def on_save_changes(self):
-        print("Lưu cấu hình databases...")
-        # TODO: bắt đầu chạy tất cả dịch vụ nền đã được thiết lập
-        # Lấy dữ liệu từ self.ui.mysql_version_combobox.currentText()
-        # và gọi self.model.save_config(...)
+        print("Chạy tất cả dịch vụ ...")
+
+        self.ui.startall_button.setText("Stop")
 
     def start_database(self, checked):
         # TODO: chạy dịch vụ database

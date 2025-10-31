@@ -16,26 +16,29 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QGridLayout, QHBoxLayout, QLabel,
-    QPushButton, QSizePolicy, QVBoxLayout, QWidget)
+    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 class Ui_DashboardPage(object):
     def setupUi(self, DashboardPage):
         if not DashboardPage.objectName():
             DashboardPage.setObjectName(u"DashboardPage")
-        DashboardPage.resize(480, 640)
+        DashboardPage.resize(698, 642)
         self.verticalLayout = QVBoxLayout(DashboardPage)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.dashboard_title_layout = QHBoxLayout()
+        self.dashboard_title_layout.setSpacing(6)
         self.dashboard_title_layout.setObjectName(u"dashboard_title_layout")
-        self.dashboard_title_label = QLabel(DashboardPage)
-        self.dashboard_title_label.setObjectName(u"dashboard_title_label")
+        self.dashboard_title_layout.setContentsMargins(-1, -1, -1, 32)
+        self.dashboard_title_label_2 = QLabel(DashboardPage)
+        self.dashboard_title_label_2.setObjectName(u"dashboard_title_label_2")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.dashboard_title_label.sizePolicy().hasHeightForWidth())
-        self.dashboard_title_label.setSizePolicy(sizePolicy)
+        sizePolicy.setHeightForWidth(self.dashboard_title_label_2.sizePolicy().hasHeightForWidth())
+        self.dashboard_title_label_2.setSizePolicy(sizePolicy)
 
-        self.dashboard_title_layout.addWidget(self.dashboard_title_label)
+        self.dashboard_title_layout.addWidget(self.dashboard_title_label_2)
 
 
         self.verticalLayout.addLayout(self.dashboard_title_layout)
@@ -46,6 +49,11 @@ class Ui_DashboardPage(object):
         self.dashboard_service_label.setObjectName(u"dashboard_service_label")
 
         self.dashboard_head_column_layout.addWidget(self.dashboard_service_label)
+
+        self.dashboard_status_label = QLabel(DashboardPage)
+        self.dashboard_status_label.setObjectName(u"dashboard_status_label")
+
+        self.dashboard_head_column_layout.addWidget(self.dashboard_status_label)
 
         self.dashboard_type_label = QLabel(DashboardPage)
         self.dashboard_type_label.setObjectName(u"dashboard_type_label")
@@ -62,110 +70,148 @@ class Ui_DashboardPage(object):
 
         self.dashboard_content_layout = QGridLayout()
         self.dashboard_content_layout.setObjectName(u"dashboard_content_layout")
-        self.database_type_label = QLabel(DashboardPage)
-        self.database_type_label.setObjectName(u"database_type_label")
+        self.database_version_label = QLabel(DashboardPage)
+        self.database_version_label.setObjectName(u"database_version_label")
 
-        self.dashboard_content_layout.addWidget(self.database_type_label, 9, 1, 1, 1)
-
-        self.network_service_label = QLabel(DashboardPage)
-        self.network_service_label.setObjectName(u"network_service_label")
-
-        self.dashboard_content_layout.addWidget(self.network_service_label, 15, 0, 1, 1)
-
-        self.tools_type_3_label = QLabel(DashboardPage)
-        self.tools_type_3_label.setObjectName(u"tools_type_3_label")
-
-        self.dashboard_content_layout.addWidget(self.tools_type_3_label, 14, 1, 1, 1)
-
-        self.tools_version_2_label = QLabel(DashboardPage)
-        self.tools_version_2_label.setObjectName(u"tools_version_2_label")
-
-        self.dashboard_content_layout.addWidget(self.tools_version_2_label, 12, 2, 1, 1)
-
-        self.tools_version_3_label = QLabel(DashboardPage)
-        self.tools_version_3_label.setObjectName(u"tools_version_3_label")
-
-        self.dashboard_content_layout.addWidget(self.tools_version_3_label, 14, 2, 1, 1)
-
-        self.language_service_label = QLabel(DashboardPage)
-        self.language_service_label.setObjectName(u"language_service_label")
-
-        self.dashboard_content_layout.addWidget(self.language_service_label, 8, 0, 1, 1)
-
-        self.tools_type_1_label = QLabel(DashboardPage)
-        self.tools_type_1_label.setObjectName(u"tools_type_1_label")
-
-        self.dashboard_content_layout.addWidget(self.tools_type_1_label, 11, 1, 1, 1)
+        self.dashboard_content_layout.addWidget(self.database_version_label, 1, 2, 1, 1)
 
         self.tools_type_2_label = QLabel(DashboardPage)
         self.tools_type_2_label.setObjectName(u"tools_type_2_label")
 
-        self.dashboard_content_layout.addWidget(self.tools_type_2_label, 12, 1, 1, 1)
-
-        self.startall_button = QPushButton(DashboardPage)
-        self.startall_button.setObjectName(u"startall_button")
-
-        self.dashboard_content_layout.addWidget(self.startall_button, 16, 1, 1, 1)
-
-        self.language_version_label = QLabel(DashboardPage)
-        self.language_version_label.setObjectName(u"language_version_label")
-
-        self.dashboard_content_layout.addWidget(self.language_version_label, 8, 2, 1, 1)
-
-        self.tools_version_1_label = QLabel(DashboardPage)
-        self.tools_version_1_label.setObjectName(u"tools_version_1_label")
-
-        self.dashboard_content_layout.addWidget(self.tools_version_1_label, 11, 2, 1, 1)
+        self.dashboard_content_layout.addWidget(self.tools_type_2_label, 4, 1, 1, 1)
 
         self.tools_service_label = QLabel(DashboardPage)
         self.tools_service_label.setObjectName(u"tools_service_label")
 
-        self.dashboard_content_layout.addWidget(self.tools_service_label, 11, 0, 1, 1)
+        self.dashboard_content_layout.addWidget(self.tools_service_label, 3, 0, 1, 1)
 
-        self.network_version_label = QLabel(DashboardPage)
-        self.network_version_label.setObjectName(u"network_version_label")
+        self.network_service_label = QLabel(DashboardPage)
+        self.network_service_label.setObjectName(u"network_service_label")
 
-        self.dashboard_content_layout.addWidget(self.network_version_label, 15, 2, 1, 1)
+        self.dashboard_content_layout.addWidget(self.network_service_label, 6, 0, 1, 1)
 
-        self.database_service_label = QLabel(DashboardPage)
-        self.database_service_label.setObjectName(u"database_service_label")
+        self.language_start_pushButton = QPushButton(DashboardPage)
+        self.language_start_pushButton.setObjectName(u"language_start_pushButton")
 
-        self.dashboard_content_layout.addWidget(self.database_service_label, 9, 0, 1, 1)
+        self.dashboard_content_layout.addWidget(self.language_start_pushButton, 0, 3, 1, 1)
 
-        self.database_version_label = QLabel(DashboardPage)
-        self.database_version_label.setObjectName(u"database_version_label")
+        self.language_version_label = QLabel(DashboardPage)
+        self.language_version_label.setObjectName(u"language_version_label")
 
-        self.dashboard_content_layout.addWidget(self.database_version_label, 9, 2, 1, 1)
-
-        self.network_type_label = QLabel(DashboardPage)
-        self.network_type_label.setObjectName(u"network_type_label")
-
-        self.dashboard_content_layout.addWidget(self.network_type_label, 15, 1, 1, 1)
-
-        self.webserver_service_label = QLabel(DashboardPage)
-        self.webserver_service_label.setObjectName(u"webserver_service_label")
-
-        self.dashboard_content_layout.addWidget(self.webserver_service_label, 10, 0, 1, 1)
-
-        self.webserver_type_label = QLabel(DashboardPage)
-        self.webserver_type_label.setObjectName(u"webserver_type_label")
-
-        self.dashboard_content_layout.addWidget(self.webserver_type_label, 10, 1, 1, 1)
+        self.dashboard_content_layout.addWidget(self.language_version_label, 1, 1, 1, 1)
 
         self.webserver_version_label = QLabel(DashboardPage)
         self.webserver_version_label.setObjectName(u"webserver_version_label")
 
-        self.dashboard_content_layout.addWidget(self.webserver_version_label, 10, 2, 1, 1)
+        self.dashboard_content_layout.addWidget(self.webserver_version_label, 2, 2, 1, 1)
+
+        self.tools_version_3_label = QLabel(DashboardPage)
+        self.tools_version_3_label.setObjectName(u"tools_version_3_label")
+
+        self.dashboard_content_layout.addWidget(self.tools_version_3_label, 5, 2, 1, 1)
+
+        self.database_service_label = QLabel(DashboardPage)
+        self.database_service_label.setObjectName(u"database_service_label")
+
+        self.dashboard_content_layout.addWidget(self.database_service_label, 1, 0, 1, 1)
+
+        self.tools_version_1_label = QLabel(DashboardPage)
+        self.tools_version_1_label.setObjectName(u"tools_version_1_label")
+
+        self.dashboard_content_layout.addWidget(self.tools_version_1_label, 3, 2, 1, 1)
+
+        self.network_version_label = QLabel(DashboardPage)
+        self.network_version_label.setObjectName(u"network_version_label")
+
+        self.dashboard_content_layout.addWidget(self.network_version_label, 6, 2, 1, 1)
+
+        self.tools_version_2_label = QLabel(DashboardPage)
+        self.tools_version_2_label.setObjectName(u"tools_version_2_label")
+
+        self.dashboard_content_layout.addWidget(self.tools_version_2_label, 4, 2, 1, 1)
+
+        self.database_start_pushButton = QPushButton(DashboardPage)
+        self.database_start_pushButton.setObjectName(u"database_start_pushButton")
+
+        self.dashboard_content_layout.addWidget(self.database_start_pushButton, 1, 3, 1, 1)
+
+        self.network_start_pushButton = QPushButton(DashboardPage)
+        self.network_start_pushButton.setObjectName(u"network_start_pushButton")
+
+        self.dashboard_content_layout.addWidget(self.network_start_pushButton, 6, 3, 1, 1)
+
+        self.network_type_label = QLabel(DashboardPage)
+        self.network_type_label.setObjectName(u"network_type_label")
+
+        self.dashboard_content_layout.addWidget(self.network_type_label, 6, 1, 1, 1)
+
+        self.webserver_service_label = QLabel(DashboardPage)
+        self.webserver_service_label.setObjectName(u"webserver_service_label")
+
+        self.dashboard_content_layout.addWidget(self.webserver_service_label, 2, 0, 1, 1)
+
+        self.database_type_label = QLabel(DashboardPage)
+        self.database_type_label.setObjectName(u"database_type_label")
+
+        self.dashboard_content_layout.addWidget(self.database_type_label, 0, 2, 1, 1)
+
+        self.startall_button = QPushButton(DashboardPage)
+        self.startall_button.setObjectName(u"startall_button")
+
+        self.dashboard_content_layout.addWidget(self.startall_button, 7, 1, 1, 2)
 
         self.language_type_label = QLabel(DashboardPage)
         self.language_type_label.setObjectName(u"language_type_label")
 
-        self.dashboard_content_layout.addWidget(self.language_type_label, 8, 1, 1, 1)
+        self.dashboard_content_layout.addWidget(self.language_type_label, 0, 1, 1, 1)
+
+        self.language_service_label = QLabel(DashboardPage)
+        self.language_service_label.setObjectName(u"language_service_label")
+
+        self.dashboard_content_layout.addWidget(self.language_service_label, 0, 0, 1, 1)
+
+        self.webserver_type_label = QLabel(DashboardPage)
+        self.webserver_type_label.setObjectName(u"webserver_type_label")
+
+        self.dashboard_content_layout.addWidget(self.webserver_type_label, 2, 1, 1, 1)
+
+        self.webserver_start_pushButton = QPushButton(DashboardPage)
+        self.webserver_start_pushButton.setObjectName(u"webserver_start_pushButton")
+
+        self.dashboard_content_layout.addWidget(self.webserver_start_pushButton, 2, 3, 1, 1)
+
+        self.tools_type_1_label = QLabel(DashboardPage)
+        self.tools_type_1_label.setObjectName(u"tools_type_1_label")
+
+        self.dashboard_content_layout.addWidget(self.tools_type_1_label, 3, 1, 1, 1)
+
+        self.tools_type_3_label = QLabel(DashboardPage)
+        self.tools_type_3_label.setObjectName(u"tools_type_3_label")
+
+        self.dashboard_content_layout.addWidget(self.tools_type_3_label, 5, 1, 1, 1)
+
+        self.tool_3_start_pushButton = QPushButton(DashboardPage)
+        self.tool_3_start_pushButton.setObjectName(u"tool_3_start_pushButton")
+
+        self.dashboard_content_layout.addWidget(self.tool_3_start_pushButton, 5, 3, 1, 1)
+
+        self.tool_2_start_pushButton = QPushButton(DashboardPage)
+        self.tool_2_start_pushButton.setObjectName(u"tool_2_start_pushButton")
+
+        self.dashboard_content_layout.addWidget(self.tool_2_start_pushButton, 4, 3, 1, 1)
+
+        self.tools_1_start_pushButton = QPushButton(DashboardPage)
+        self.tools_1_start_pushButton.setObjectName(u"tools_1_start_pushButton")
+
+        self.dashboard_content_layout.addWidget(self.tools_1_start_pushButton, 3, 3, 1, 1)
 
 
         self.verticalLayout.addLayout(self.dashboard_content_layout)
 
-        self.verticalLayout.setStretch(2, 1)
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout.addItem(self.verticalSpacer)
+
 
         self.retranslateUi(DashboardPage)
 
@@ -174,29 +220,37 @@ class Ui_DashboardPage(object):
 
     def retranslateUi(self, DashboardPage):
         DashboardPage.setWindowTitle(QCoreApplication.translate("DashboardPage", u"Form", None))
-        self.dashboard_title_label.setText(QCoreApplication.translate("DashboardPage", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700;\">Dashboard</span></p></body></html>", None))
+        self.dashboard_title_label_2.setText(QCoreApplication.translate("DashboardPage", u"<html><head/><body><p><span style=\" font-size:14pt; font-weight:700;\">Dashboard</span></p></body></html>", None))
         self.dashboard_service_label.setText(QCoreApplication.translate("DashboardPage", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Service</span></p></body></html>", None))
+        self.dashboard_status_label.setText(QCoreApplication.translate("DashboardPage", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Status</span></p></body></html>", None))
         self.dashboard_type_label.setText(QCoreApplication.translate("DashboardPage", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Type</span></p></body></html>", None))
         self.dashboard_version_label.setText(QCoreApplication.translate("DashboardPage", u"<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Version</span></p></body></html>", None))
-        self.database_type_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
-        self.network_service_label.setText(QCoreApplication.translate("DashboardPage", u"Network", None))
-        self.tools_type_3_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
-        self.tools_version_2_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
-        self.tools_version_3_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
-        self.language_service_label.setText(QCoreApplication.translate("DashboardPage", u"Language", None))
-        self.tools_type_1_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
-        self.tools_type_2_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
-        self.startall_button.setText(QCoreApplication.translate("DashboardPage", u"Start All", None))
-        self.language_version_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
-        self.tools_version_1_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
-        self.tools_service_label.setText(QCoreApplication.translate("DashboardPage", u"Tools", None))
-        self.network_version_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
-        self.database_service_label.setText(QCoreApplication.translate("DashboardPage", u"Database", None))
         self.database_version_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.tools_type_2_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.tools_service_label.setText(QCoreApplication.translate("DashboardPage", u"Tools", None))
+        self.network_service_label.setText(QCoreApplication.translate("DashboardPage", u"Network", None))
+        self.language_start_pushButton.setText(QCoreApplication.translate("DashboardPage", u"Start", None))
+        self.language_version_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.webserver_version_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.tools_version_3_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.database_service_label.setText(QCoreApplication.translate("DashboardPage", u"Database", None))
+        self.tools_version_1_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.network_version_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.tools_version_2_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.database_start_pushButton.setText(QCoreApplication.translate("DashboardPage", u"Start", None))
+        self.network_start_pushButton.setText(QCoreApplication.translate("DashboardPage", u"Start", None))
         self.network_type_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
         self.webserver_service_label.setText(QCoreApplication.translate("DashboardPage", u"Webserver", None))
-        self.webserver_type_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
-        self.webserver_version_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.database_type_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.startall_button.setText(QCoreApplication.translate("DashboardPage", u"Start All", None))
         self.language_type_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.language_service_label.setText(QCoreApplication.translate("DashboardPage", u"Language", None))
+        self.webserver_type_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.webserver_start_pushButton.setText(QCoreApplication.translate("DashboardPage", u"Start", None))
+        self.tools_type_1_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.tools_type_3_label.setText(QCoreApplication.translate("DashboardPage", u"TextLabel", None))
+        self.tool_3_start_pushButton.setText(QCoreApplication.translate("DashboardPage", u"Start", None))
+        self.tool_2_start_pushButton.setText(QCoreApplication.translate("DashboardPage", u"Start", None))
+        self.tools_1_start_pushButton.setText(QCoreApplication.translate("DashboardPage", u"Start", None))
     # retranslateUi
 
