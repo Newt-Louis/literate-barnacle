@@ -1,38 +1,44 @@
-from PySide6.QtWidgets import QWidget
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QWidget, QRadioButton, QFileDialog, QMessageBox
 from ui.windows.origin_interface import Ui_LanguagesPage
 from .LanguagesServiceController import LanguagesServiceController
 
 
 class LanguagesPageController(QWidget):
-    BROWSE_MAP = {}
-    WIDGET_MAP = {
+    BROWSE_MAP = {
+        "php_browse_root_folder_pushbutton":("file","php_root_folder_lineedit","(*.exe)"),
+        "python_browse_root_folder_pushbutton":("file","python_root_folder_lineedit","(*.exe)"),
+        "java_browse_root_folder_pushbutton":("file","java_root_folder_lineedit","(*.exe)"),
+        "nodejs_browse_root_folder_pushbutton":("file","nodejs_root_folder_lineedit","(*.exe)"),
+    }
+    LANGUAGE_GROUP = {
         "php": [
-            "self.ui.php_combobox",
-            "self.ui.php_ssl_enabled_checkbox",
-            "self.ui.php_port_lineedit",
-            "self.ui.php_root_folder_lineedit",
-            "self.ui.php_browse_root_folder_pushbutton",
+            "php_combobox",
+            "php_ssl_enabled_checkbox",
+            "php_port_lineedit",
+            "php_root_folder_lineedit",
+            "php_browse_root_folder_pushbutton",
         ],
         "python": [
-            "self.ui.python_combobox",
-            "self.ui.python_ssl_enabled_checkbox",
-            "self.ui.python_port_lineedit",
-            "self.ui.python_root_folder_lineedit",
-            "self.ui.python_browse_root_folder_pushbutton",
+            "python_combobox",
+            "python_ssl_enabled_checkbox",
+            "python_port_lineedit",
+            "python_root_folder_lineedit",
+            "python_browse_root_folder_pushbutton",
         ],
         "java": [
-            "self.ui.java_combobox",
-            "self.ui.java_ssl_enabled_checkbox",
-            "self.ui.java_port_lineedit",
-            "self.ui.java_root_folder_lineedit",
-            "self.ui.java_browse_root_folder_pushbutton",
+            "java_combobox",
+            "java_ssl_enabled_checkbox",
+            "java_port_lineedit",
+            "java_root_folder_lineedit",
+            "java_browse_root_folder_pushbutton",
         ],
         "nodejs": [
-            "self.ui.nodejs_combobox",
-            "self.ui.nodejs_ssl_enabled_checkbox",
-            "self.ui.nodejs_port_lineedit",
-            "self.ui.nodejs_root_folder_lineedit",
-            "self.ui.nodejs_browse_root_folder_pushbutton",
+            "nodejs_combobox",
+            "nodejs_ssl_enabled_checkbox",
+            "nodejs_port_lineedit",
+            "nodejs_root_folder_lineedit",
+            "nodejs_browse_root_folder_pushbutton",
         ],
     }
     def __init__(self, model):
@@ -44,7 +50,10 @@ class LanguagesPageController(QWidget):
 
         # Gán sự kiện cho các nút
         self.ui.language_save_change_buttonbox.clicked.connect(self.on_save_changes)
-        self.ui.php_radio.toggled.connect(lambda checked: self.on_language_selected("php"))
+        self.ui.php_radio.clicked.connect(lambda checked: self.on_language_selected("php", checked))
+        self.ui.python_radio.clicked.connect(lambda checked: self.on_language_selected("python", checked))
+        self.ui.java_radio.clicked.connect(lambda checked: self.on_language_selected("java", checked))
+        self.ui.nodejs_radio.clicked.connect(lambda checked: self.on_language_selected("nodejs", checked))
 
         # Chạy các hàm khởi tạo hoặc lấy dữ liệu ban đầu
         languages_init_data = self.language_core_service.load_data()
@@ -53,5 +62,17 @@ class LanguagesPageController(QWidget):
     def on_save_changes(self):
         print("Lưu cấu hình languages...")
 
-    def on_language_selected(self, language):
-        print("PHP được chọn.")
+    def on_language_selected(self, language, checked):
+        for str_language, widgets in LanguagesPageController.LANGUAGE_GROUP.items():
+            enabled = str_language == language
+            for str_widget in widgets:
+                widget = getattr(self.ui, str_widget)
+                widget.setEnabled(enabled)
+
+    def _set_group_enabled(self,language,enabled):
+        widgets = LanguagesPageController.LANGUAGE_GROUP[language]
+        for str_widget in widgets:
+            widget = getattr(self.ui, str_widget)
+            if isinstance(widget, QtWidgets.QRadioButton):
+                continue
+            widget.setEnabled(enabled)
