@@ -28,9 +28,13 @@ class DashboardPageController(QWidget):
         self.ui.network_start_pushButton.clicked.connect(self.start_network)
 
     def on_save_changes(self):
-        print("Chạy tất cả dịch vụ ...")
-
-        self.ui.startall_button.setText("Stop")
+        start_all_status = self.dashboard_session.get("start_all_services")
+        if start_all_status == 0:
+            self.dashboard_session.set("start_all_services", 1)
+            self.ui.startall_button.setText("Stop")
+        else:
+            self.dashboard_session.set("start_all_services", 0)
+            self.ui.startall_button.setText("Start All")
 
     def start_database(self):
         database_status = self.dashboard_session.get("services_status")

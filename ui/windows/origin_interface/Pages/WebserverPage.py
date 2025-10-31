@@ -46,6 +46,7 @@ class Ui_WebserverPage(object):
 
         self.webserver_save_change_layout = QHBoxLayout()
         self.webserver_save_change_layout.setObjectName(u"webserver_save_change_layout")
+        self.webserver_save_change_layout.setContentsMargins(-1, -1, -1, 32)
         self.webserver_save_change_buttonbox = QDialogButtonBox(WebserverPage)
         self.webserver_save_change_buttonbox.setObjectName(u"webserver_save_change_buttonbox")
         self.webserver_save_change_buttonbox.setStandardButtons(QDialogButtonBox.StandardButton.Cancel|QDialogButtonBox.StandardButton.Ok)

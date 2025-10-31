@@ -39,6 +39,9 @@
    </item>
    <item>
     <layout class="QHBoxLayout" name="webserver_save_change_layout">
+     <property name="bottomMargin">
+      <number>32</number>
+     </property>
      <item>
       <widget class="QDialogButtonBox" name="webserver_save_change_buttonbox">
        <property name="standardButtons">

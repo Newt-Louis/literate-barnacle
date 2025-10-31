@@ -13,10 +13,6 @@ if __name__ == "__main__":
     run_all_startup_syncs()
     print("Đồng bộ hóa hoàn tất.")
     start_watching()
-    dashboard_session = DashboardManagement()
-    dashboard_session.set("services_status",{
-        "database": 0,
-        "webserver": 0,
-    })
+    DashboardManagement()
     window.show()
     sys.exit(app.exec())
