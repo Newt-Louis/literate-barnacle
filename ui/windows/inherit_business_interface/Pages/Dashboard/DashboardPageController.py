@@ -3,6 +3,7 @@ from PySide6.QtWidgets import QWidget
 from .DashboardServiceController import DashboardServiceController
 from ui.windows.origin_interface import Ui_DashboardPage
 from core.manager.EventBus import EventBus
+from core.manager.DashboardManagement import DashboardManagement
 
 
 class DashboardPageController(QWidget):
@@ -12,25 +13,46 @@ class DashboardPageController(QWidget):
         self.ui = Ui_DashboardPage()
         self.ui.setupUi(self)
         self.dashboard_service = DashboardServiceController()
+        self.dashboard_session = DashboardManagement()
 
         # Nghe sự kiện phát ra từ các trang dịch vụ khác
         EventBus.webserver_saved.connect(self.listener_webserver_saved)
 
         # Gán hàm xử lý sự kiện cho nút start all
         self.ui.startall_button.clicked.connect(self.on_save_changes)
+        self.ui.webserver_start_pushButton.clicked.connect(self.start_webserver)
+        self.ui.database_start_pushButton.clicked.connect(self.start_database)
+        self.ui.language_start_pushButton.clicked.connect(self.start_language)
+        self.ui.tool_2_start_pushButton.clicked.connect(self.start_tools)
+        self.ui.tool_3_start_pushButton.clicked.connect(self.start_tools)
+        self.ui.network_start_pushButton.clicked.connect(self.start_network)
 
     def on_save_changes(self):
         print("Chạy tất cả dịch vụ ...")
 
         self.ui.startall_button.setText("Stop")
 
-    def start_database(self, checked):
-        # TODO: chạy dịch vụ database
-        if checked:
-            print("Database đang chạy...")
+    def start_database(self):
+        database_status = self.dashboard_session.get("services_status")
+        if "database" in database_status:
+            match database_status["database"]:
+                case 0:
+                    self.ui.database_start_pushButton.setText("Stop")
+                    self.dashboard_session.add_to_current_key("services_status", "database", 1)
+                case 1:
+                    self.ui.database_start_pushButton.setText("Start")
+                    self.dashboard_session.add_to_current_key("services_status", "database", 0)
 
     def start_webserver(self):
-        print("Webserver đang chạy...")
+        webserver_status = self.dashboard_session.get("services_status")
+        if "webserver" in webserver_status:
+            match webserver_status["webserver"]:
+                case 0:
+                    self.ui.webserver_start_pushButton.setText("Stop")
+                    self.dashboard_session.add_to_current_key("services_status", "webserver", 1)
+                case 1:
+                    self.ui.webserver_start_pushButton.setText("Start")
+                    self.dashboard_session.add_to_current_key("services_status","webserver",0)
 
     def start_tools(self):
         print("Tool redis hoặc memcached hoặc terminal độc lập của ứng dụng đang chạy")

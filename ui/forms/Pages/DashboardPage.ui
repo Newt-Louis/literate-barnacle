@@ -79,7 +79,7 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLabel" name="tools_type_2_label">
+      <widget class="QLabel" name="tool_type_2_label">
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -121,7 +121,7 @@
       </widget>
      </item>
      <item row="5" column="2">
-      <widget class="QLabel" name="tools_version_3_label">
+      <widget class="QLabel" name="tool_version_3_label">
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -135,7 +135,7 @@
       </widget>
      </item>
      <item row="3" column="2">
-      <widget class="QLabel" name="tools_version_1_label">
+      <widget class="QLabel" name="tool_version_1_label">
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -149,7 +149,7 @@
       </widget>
      </item>
      <item row="4" column="2">
-      <widget class="QLabel" name="tools_version_2_label">
+      <widget class="QLabel" name="tool_version_2_label">
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -226,14 +226,14 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLabel" name="tools_type_1_label">
+      <widget class="QLabel" name="tool_type_1_label">
        <property name="text">
         <string>TextLabel</string>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLabel" name="tools_type_3_label">
+      <widget class="QLabel" name="tool_type_3_label">
        <property name="text">
         <string>TextLabel</string>
        </property>
@@ -254,7 +254,7 @@
       </widget>
      </item>
      <item row="3" column="3">
-      <widget class="QPushButton" name="tools_1_start_pushButton">
+      <widget class="QPushButton" name="tool_1_start_pushButton">
        <property name="text">
         <string>Start</string>
        </property>
