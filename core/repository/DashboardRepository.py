@@ -11,7 +11,7 @@ def get_all_dashboard_settings():
         cursor.execute("SELECT * FROM dashboard_settings")
         rows = cursor.fetchall()
 
-        if len(rows) is not 0:
+        if len(rows) != 0:
             return [DashboardSetting(**dict(row)) for row in rows]
         return None
     except sqlite3.Error as e:
