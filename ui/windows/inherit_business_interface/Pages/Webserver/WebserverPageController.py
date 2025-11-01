@@ -162,7 +162,6 @@ class WebserverPageController(QWidget):
         """Xử lý khi click bất kỳ nút Browse nào"""
         sender = self.sender()
         name = sender.objectName()
-        print(f"Clicked: {name}")
         if name not in self.__class__.BROWSE_MAP:
             return
 

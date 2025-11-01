@@ -4,8 +4,8 @@ class LanguagesServiceController:
     def __init__(self):
         self.language_core_service = LanguageCoreService()
 
-    def save_changes(self):
-        print("Languages Page Controller _on_save_changes")
+    def save_changes(self,data_to_save):
+        self.language_core_service.save_settings(data_to_save)
 
     def cancel_changes(self):
         print("Languages Page Controller _on_cancel_changes")

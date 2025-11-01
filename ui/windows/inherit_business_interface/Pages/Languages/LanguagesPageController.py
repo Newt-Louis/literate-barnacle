@@ -1,5 +1,7 @@
 import os
 from PySide6.QtWidgets import QWidget, QRadioButton, QFileDialog, QMessageBox
+
+from core.manager.DashboardManagement import DashboardManagement
 from ui.windows.origin_interface import Ui_LanguagesPage
 from .LanguagesServiceController import LanguagesServiceController
 
@@ -47,6 +49,7 @@ class LanguagesPageController(QWidget):
         self.ui = Ui_LanguagesPage()
         self.ui.setupUi(self)
         self.language_core_service = LanguagesServiceController()
+        self.dashboard_session = DashboardManagement()
 
         self.setStyleSheet("""
                     /* --- Trạng thái CHƯA CHECK --- */
@@ -86,7 +89,6 @@ class LanguagesPageController(QWidget):
         try:
             # Cấu hình ngôn ngữ đang được chọn
             languages_init_data = self.language_core_service.load_data()
-            print(languages_init_data)
             if languages_init_data is None:
                 QMessageBox.warning(self,"Cảnh báo","Dữ liệu trong database đang rỗng!")
             else:
@@ -120,8 +122,54 @@ class LanguagesPageController(QWidget):
             except AttributeError as e:
                 print(f"Lỗi: Không tìm thấy {lang}_ssl_enabled_checkbox: {e}")
 
+        for button_name in self.BROWSE_MAP.keys():
+            try:
+                button_widget = getattr(self.ui, button_name)
+                button_widget.clicked.connect(self.on_browse_button_clicked)
+            except AttributeError:
+                print(f"Lỗi: Không tìm thấy nút browse trong UI: {button_name}")
+
     def on_save_changes(self):
-        print("Lưu cấu hình languages...")
+        current_language_selected = self.dashboard_session.get("language_page_selected")
+        try:
+            # 1. Lấy các giá trị mới từ UI
+            selected_version = getattr(self.ui, f"{current_language_selected}_combobox").currentText()
+            root_folder_text = getattr(self.ui, f"{current_language_selected}_root_folder_lineedit").text()
+            is_ssl_enabled = getattr(self.ui, f"{current_language_selected}_ssl_enabled_checkbox").isChecked()
+            ssl_port = getattr(self.ui, f"{current_language_selected}_port_lineedit").text()
+            is_chosen = getattr(self.ui, f"{current_language_selected}_radio").isChecked()
+
+            # 2. Xử lý giá trị (ví dụ: root_folder có thể là None)
+            root_folder = root_folder_text if root_folder_text.strip() else None
+            ssl_port = ssl_port if ssl_port.strip() else None
+
+            # 3. Xây dựng dictionary theo mô hình LanguageSetting
+            setting_dict = {
+                "language": current_language_selected,
+                "selected_version": selected_version,
+                "root_folder": root_folder,
+                "is_ssl_enabled": is_ssl_enabled,
+                "is_chosen": is_chosen,
+                "ssl_port": ssl_port,
+            }
+            required_fields = {
+                "language":"Language",
+                "selected_version":"Select version",
+            }
+            for field_key, field_name in required_fields.items():
+                if not setting_dict[field_key]:
+                    QMessageBox.warning(self,"Thiếu thông tin",f"'{field_name}' không được trống!")
+                    return
+
+            self.language_core_service.save_changes(setting_dict)
+
+            QMessageBox.information(self, "Thành công", "Đã lưu tất cả thay đổi!")
+
+        except AttributeError as e:
+            # Lỗi này xảy ra nếu tên widget không khớp (ví dụ: 'php_combobox' không tìm thấy)
+            QMessageBox.critical(self, "Lỗi UI", f"Không thể lấy dữ liệu từ widget: {e}")
+        except Exception as e:
+            QMessageBox.critical(self, "Lỗi", f"Có lỗi xảy ra khi lưu: {str(e)}")
 
     def init_settings_data(self, language, data):
         try:
@@ -158,6 +206,7 @@ class LanguagesPageController(QWidget):
                         port_lineedit.setEnabled(False)
                     except AttributeError:
                         pass
+        self.dashboard_session.set("language_page_selected", language)
 
     def _set_ssl_checkbox_toggled(self,language,enabled):
         try:
@@ -167,19 +216,13 @@ class LanguagesPageController(QWidget):
             print(f"Lỗi: Không tìm thấy widget cho {language}_port_lineedit: {e}")
 
     def on_browse_button_clicked(self):
-        # 1. Lấy tên của nút đã nhấn
         sender_button_name = self.sender().objectName()
-
-        # 2. Tra cứu cấu hình từ BROWSE_MAP
         if sender_button_name not in self.BROWSE_MAP:
             QMessageBox.warning(self, "Lỗi", f"Không tìm thấy cấu hình browse cho: {sender_button_name}")
             return
 
         config = self.BROWSE_MAP[sender_button_name]
-
-        # 3. Tìm QLineEdit đích
         try:
-            # Dùng tuple unpacking để code gọn hơn
             dialog_type, target_line_edit_name = config[:2]
             target_line_edit = getattr(self.ui, target_line_edit_name)
         except AttributeError:
@@ -189,12 +232,10 @@ class LanguagesPageController(QWidget):
             QMessageBox.warning(self, "Lỗi Cấu hình", f"Cấu hình BROWSE_MAP bị lỗi cho: {sender_button_name}")
             return
 
-        # 4. Lấy đường dẫn hiện tại (nếu có) để mở dialog đúng chỗ
         current_path = target_line_edit.text()
         if not os.path.isdir(current_path):  # Kiểm tra xem đường dẫn có hợp lệ không
             current_path = "C:/"  # Mặc định
 
-        # 5. Mở Dialog
         selected_path = ""
 
         if dialog_type == "folder":
@@ -204,7 +245,6 @@ class LanguagesPageController(QWidget):
                 current_path  # Thư mục bắt đầu
             )
         elif dialog_type == "file":
-            # Xử lý trường hợp bạn vẫn muốn chọn file
             file_filter = config[2] if len(config) > 2 else "All Files (*)"
             selected_path, _ = QFileDialog.getOpenFileName(
                 self,
@@ -213,7 +253,6 @@ class LanguagesPageController(QWidget):
                 file_filter
             )
 
-        # 6. Cập nhật QLineEdit nếu người dùng đã chọn
         if selected_path:
             normalized_path = os.path.normpath(selected_path)
             target_line_edit.setText(normalized_path)

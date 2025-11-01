@@ -134,3 +134,13 @@ def disable_all_webservers() -> bool:
             return True
     except sqlite3.Error as e:
         return False
+
+def update_ssl_port(ssl_port:int) -> bool:
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute("UPDATE webserver_settings SET ssl_port = ? WHERE is_enabled = 1",(ssl_port,))
+            conn.commit()
+            return True
+    except sqlite3.Error as e:
+        return False

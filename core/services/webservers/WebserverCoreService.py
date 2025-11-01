@@ -18,7 +18,6 @@ class WebserverCoreService:
             raise
 
     def save_settings(self, settings_data: dict) -> bool:
-        print(settings_data.get("type"))
         try:
             model_data = {
                 'server_name': settings_data.get('type'),
