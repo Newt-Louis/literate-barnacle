@@ -1,7 +1,7 @@
 import os
 from PySide6.QtWidgets import QWidget, QRadioButton, QFileDialog, QMessageBox
 
-from core.manager.DashboardManagement import DashboardManagement
+from core.manager.DashboardSession import DashboardSession
 from ui.windows.origin_interface import Ui_LanguagesPage
 from .LanguagesServiceController import LanguagesServiceController
 
@@ -49,7 +49,7 @@ class LanguagesPageController(QWidget):
         self.ui = Ui_LanguagesPage()
         self.ui.setupUi(self)
         self.language_core_service = LanguagesServiceController()
-        self.dashboard_session = DashboardManagement()
+        self.dashboard_session = DashboardSession()
 
         self.setStyleSheet("""
                     /* --- Trạng thái CHƯA CHECK --- */

@@ -3,7 +3,7 @@ from PySide6.QtWidgets import QWidget
 from .DashboardServiceController import DashboardServiceController
 from ui.windows.origin_interface import Ui_DashboardPage
 from core.manager.EventBus import EventBus
-from core.manager.DashboardManagement import DashboardManagement
+from core.manager.DashboardSession import DashboardSession
 
 
 class DashboardPageController(QWidget):
@@ -13,7 +13,7 @@ class DashboardPageController(QWidget):
         self.ui = Ui_DashboardPage()
         self.ui.setupUi(self)
         self.dashboard_service = DashboardServiceController()
-        self.dashboard_session = DashboardManagement()
+        self.dashboard_session = DashboardSession()
 
         # Nghe sự kiện phát ra từ các trang dịch vụ khác
         EventBus.webserver_saved.connect(self.listener_webserver_saved)

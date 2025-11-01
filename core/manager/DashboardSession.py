@@ -1,8 +1,8 @@
-class DashboardManagement:
+class DashboardSession:
     _instance = None
     def __new__(cls):
         if cls._instance is None:
-            cls._instance = super(DashboardManagement, cls).__new__(cls)
+            cls._instance = super(DashboardSession, cls).__new__(cls)
             cls._instance._data = {
                 "services_status":{"database": 0,"webserver": 0,},
                 "start_all_services": 0
