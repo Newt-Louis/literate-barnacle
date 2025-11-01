@@ -10,6 +10,7 @@ def up(cursor: sqlite3.Cursor):
                        project_name TEXT,
                        language TEXT,
                        project_path TEXT,
+                       app_port INTEGER,
                        domain TEXT,
                        is_enabled BOOLEAN
                    );

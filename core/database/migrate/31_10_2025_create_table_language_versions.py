@@ -16,7 +16,7 @@ def up(cursor: sqlite3.Cursor):
     cursor.execute(
         "INSERT OR IGNORE INTO language_versions (type, version) VALUES ('php', '8.1');")
     cursor.execute(
-        "INSERT OR IGNORE INTO language_versions (type, version) VALUES ('php', '8.2');")
+        "INSERT OR IGNORE INTO language_versions (type, version) VALUES ('php', 'php-8.2.29-nts-Win32-vs16-x64');")
     cursor.execute(
         "INSERT OR IGNORE INTO language_versions (type, version) VALUES ('python', '3.10');")
     cursor.execute(
