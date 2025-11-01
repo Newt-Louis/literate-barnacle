@@ -16,10 +16,16 @@ class LanguagesServiceController:
     def update_data(self):
         print("Languages Page Controller _on_update_data")
 
+    def load_languages_version(self):
+        try:
+            data = self.language_core_service.load_all_language_versions()
+            return None if data is None else data
+        except Exception as e:
+            raise e
+
     def load_data(self):
         try:
             data = self.language_core_service.load_settings()
             return None if data is None else data
         except Exception as e:
-            print(e)
-            raise
+            raise e

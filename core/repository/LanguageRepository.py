@@ -1,7 +1,9 @@
 import sqlite3, os
 from core.config import config
 from core.database.model.languages.LanguageSetting import LanguageSetting
+
 DB_PATH = config.DB_PATH
+
 def get_all_language_versions() -> dict[str, list[sqlite3.Row]]:
     versions_dict = {}
     try:
@@ -12,13 +14,13 @@ def get_all_language_versions() -> dict[str, list[sqlite3.Row]]:
             rows = cursor.fetchall()
 
             for row in rows:
-                server_type = row["type"]
-                versions_dict[server_type].append(row)
+                language = row["type"]
+                versions_dict.setdefault(language, []).append(row)
 
             return versions_dict
     except sqlite3.Error as e:
         print(f"Lỗi database khi lấy danh sách phiên bản: {e}")
-        return {}
+        raise e
 
 def get_all_languages_settings():
     try:
@@ -32,7 +34,7 @@ def get_all_languages_settings():
             return {}
     except sqlite3.Error as e:
         print("Lỗi khi lấy dữ liệu cấu hình language!")
-        return {}
+        raise e
 
 def update_language_settings(settings: LanguageSetting):
     try:
