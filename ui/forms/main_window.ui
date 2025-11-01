@@ -151,7 +151,7 @@
       <item>
        <widget class="QStackedWidget" name="main_content_area">
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 255, 255);</string>
+         <string notr="true">background-color:rgb(255,255,255)</string>
         </property>
         <property name="currentIndex">
          <number>-1</number>

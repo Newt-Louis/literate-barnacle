@@ -138,6 +138,8 @@ class Ui_LanguagesPage(object):
 
         self.php_ssl_enabled_checkbox = QCheckBox(LanguagesPage)
         self.php_ssl_enabled_checkbox.setObjectName(u"php_ssl_enabled_checkbox")
+        self.php_ssl_enabled_checkbox.setCheckable(True)
+        self.php_ssl_enabled_checkbox.setChecked(True)
 
         self.language_content_layout.addWidget(self.php_ssl_enabled_checkbox, 1, 2, 1, 1)
 

@@ -1,4 +1,4 @@
-from PySide6 import QtWidgets
+import os
 from PySide6.QtWidgets import QWidget, QRadioButton, QFileDialog, QMessageBox
 from ui.windows.origin_interface import Ui_LanguagesPage
 from .LanguagesServiceController import LanguagesServiceController
@@ -6,10 +6,10 @@ from .LanguagesServiceController import LanguagesServiceController
 
 class LanguagesPageController(QWidget):
     BROWSE_MAP = {
-        "php_browse_root_folder_pushbutton":("file","php_root_folder_lineedit","(*.exe)"),
-        "python_browse_root_folder_pushbutton":("file","python_root_folder_lineedit","(*.exe)"),
-        "java_browse_root_folder_pushbutton":("file","java_root_folder_lineedit","(*.exe)"),
-        "nodejs_browse_root_folder_pushbutton":("file","nodejs_root_folder_lineedit","(*.exe)"),
+        "php_browse_root_folder_pushbutton":("folder","php_root_folder_lineedit"),
+        "python_browse_root_folder_pushbutton":("folder","python_root_folder_lineedit"),
+        "java_browse_root_folder_pushbutton":("folder","java_root_folder_lineedit"),
+        "nodejs_browse_root_folder_pushbutton":("folder","nodejs_root_folder_lineedit"),
     }
     LANGUAGE_GROUP = {
         "php": [
@@ -47,6 +47,29 @@ class LanguagesPageController(QWidget):
         self.ui = Ui_LanguagesPage()
         self.ui.setupUi(self)
         self.language_core_service = LanguagesServiceController()
+
+        self.setStyleSheet("""
+                    /* --- Trạng thái CHƯA CHECK --- */
+                    QCheckBox::indicator:unchecked {
+                        background-color: #FFFFFF;
+                        border: 1px solid #767676; /* Viền xám */
+                    }
+                    /* Khi di chuột vào (chưa check) */
+                    QCheckBox::indicator:unchecked:hover {
+                        border: 1px solid #000000;
+                    }
+
+                    /* --- Trạng thái ĐÃ CHECK (Quan trọng nhất) --- */
+                    QCheckBox::indicator:checked {
+                        background-color: #0078D7;
+                        border: 1px solid #000000;
+                    }
+                    /* Khi di chuột vào (đã check) */
+                    QCheckBox::indicator:checked:hover {
+                        background-color: #005A9E; /* Nền xanh đậm hơn */
+                        border: 1px solid #005A9E;
+                    }
+                """)
 
         # Chạy các hàm khởi tạo hoặc lấy dữ liệu ban đầu
         try:
@@ -142,3 +165,55 @@ class LanguagesPageController(QWidget):
             port_lineedit.setEnabled(enabled)
         except AttributeError as e:
             print(f"Lỗi: Không tìm thấy widget cho {language}_port_lineedit: {e}")
+
+    def on_browse_button_clicked(self):
+        # 1. Lấy tên của nút đã nhấn
+        sender_button_name = self.sender().objectName()
+
+        # 2. Tra cứu cấu hình từ BROWSE_MAP
+        if sender_button_name not in self.BROWSE_MAP:
+            QMessageBox.warning(self, "Lỗi", f"Không tìm thấy cấu hình browse cho: {sender_button_name}")
+            return
+
+        config = self.BROWSE_MAP[sender_button_name]
+
+        # 3. Tìm QLineEdit đích
+        try:
+            # Dùng tuple unpacking để code gọn hơn
+            dialog_type, target_line_edit_name = config[:2]
+            target_line_edit = getattr(self.ui, target_line_edit_name)
+        except AttributeError:
+            QMessageBox.warning(self, "Lỗi UI", f"Không tìm thấy widget: {target_line_edit_name}")
+            return
+        except ValueError:
+            QMessageBox.warning(self, "Lỗi Cấu hình", f"Cấu hình BROWSE_MAP bị lỗi cho: {sender_button_name}")
+            return
+
+        # 4. Lấy đường dẫn hiện tại (nếu có) để mở dialog đúng chỗ
+        current_path = target_line_edit.text()
+        if not os.path.isdir(current_path):  # Kiểm tra xem đường dẫn có hợp lệ không
+            current_path = "C:/"  # Mặc định
+
+        # 5. Mở Dialog
+        selected_path = ""
+
+        if dialog_type == "folder":
+            selected_path = QFileDialog.getExistingDirectory(
+                self,
+                "Chọn thư mục gốc",  # Tiêu đề cửa sổ
+                current_path  # Thư mục bắt đầu
+            )
+        elif dialog_type == "file":
+            # Xử lý trường hợp bạn vẫn muốn chọn file
+            file_filter = config[2] if len(config) > 2 else "All Files (*)"
+            selected_path, _ = QFileDialog.getOpenFileName(
+                self,
+                "Chọn tệp tin",
+                current_path,
+                file_filter
+            )
+
+        # 6. Cập nhật QLineEdit nếu người dùng đã chọn
+        if selected_path:
+            normalized_path = os.path.normpath(selected_path)
+            target_line_edit.setText(normalized_path)

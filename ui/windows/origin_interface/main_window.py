@@ -126,7 +126,7 @@ class Ui_MainWindow(object):
         self.main_content_layout.setObjectName(u"main_content_layout")
         self.main_content_area = QStackedWidget(self.centralwidget)
         self.main_content_area.setObjectName(u"main_content_area")
-        self.main_content_area.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.main_content_area.setStyleSheet(u"background-color:rgb(255,255,255)")
 
         self.main_content_layout.addWidget(self.main_content_area)
 
